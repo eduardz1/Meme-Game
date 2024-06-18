@@ -3,20 +3,19 @@ import Choice from "../components/choice.mjs";
 
 class ChoiceDAO {
   static getChoices() {
-    const choices = db.prepare("SELECT * FROM Choice").all();
+    const sql = `
+      SELECT *
+      FROM
+        Choice
+        JOIN Caption ON Choice.idCaption = Caption.id
+        JOIN Meme ON Choice.idMeme = Meme.id
+        JOIN Round ON Choice.idRound = Round.id;`;
 
-    choices.map((choice) => {
-      const caption = db
-        .prepare("SELECT * FROM Caption WHERE id = ?")
-        .get(choice.idCaption);
-      const meme = db
-        .prepare("SELECT * FROM Meme WHERE id = ?")
-        .get(choice.idMeme);
+    const choices = db.prepare(sql).all();
 
-      return new Choice(caption, meme);
+    return choices.map((choice) => {
+      return new Choice(choice.id, choice.path, choice.text);
     });
-
-    return choices;
   }
 }
 
