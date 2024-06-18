@@ -20,7 +20,7 @@
 
 ## API Server
 
-- POST `/api/something`: purpose
+<!-- - POST `/api/something`: purpose
   - request parameters and request body content
   - response body content
   - response status codes and possible errors
@@ -31,11 +31,15 @@
 - PUT `/api/something`: purpose
   - request parameters and request body content
   - response body content
-  - response status codes and possible errors
-- ...
+  - response status codes and possible errors -->
+- GET `/meme-game/history`:
+- GET `/meme-game/history/:id`:
+- GET `/meme-game/users/:email`:
+- 
 
 ## Database Tables
 
+<!-- Write the SQL code of the database -->
 - Table `users` - short description of its contents
 - Table `something` - short description of its contents
 - ...
