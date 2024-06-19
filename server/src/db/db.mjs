@@ -1,5 +1,6 @@
 import Database from "better-sqlite3";
 
-const db = new Database("meme-game.db", { verbose: console.log });
+// eslint-disable-next-line no-console
+const db = new Database("./src/db/meme-game.sqlite", { verbose: console.log });
 
 export default db;

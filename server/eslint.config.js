@@ -4,7 +4,6 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { FlatCompat } from "@eslint/eslintrc";
 import pluginJs from "@eslint/js";
-// import babelParser from "@babel/eslint-parser";
 import eslintConfigPrettier from "eslint-config-prettier";
 
 // mimic CommonJS variables -- not needed if using CommonJS
@@ -19,8 +18,11 @@ export default [
   {
     languageOptions: {
       globals: globals.browser,
-      // parser: babelParser,
       parserOptions: { ecmaVersion: "latest", sourceType: "module" },
+    },
+    rules: {
+      "no-underscore-dangle": "off",
+      "import/extensions": "off",
     },
   },
   ...compat.extends("airbnb-base"),

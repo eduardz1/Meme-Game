@@ -13,9 +13,7 @@ class ChoiceDAO {
 
     const choices = db.prepare(sql).all();
 
-    return choices.map((choice) => {
-      return new Choice(choice.id, choice.path, choice.text);
-    });
+    return choices.map((choice) => new Choice(choice.id, choice.path, choice.text));
   }
 }
 

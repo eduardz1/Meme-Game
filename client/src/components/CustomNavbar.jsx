@@ -1,30 +1,39 @@
 import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import InputGroup from "react-bootstrap/InputGroup";
+import LoginForm from "./auth/LoginForm";
+import LogoutButton from "./auth/LogoutButton";
+import "bootstrap-icons/font/bootstrap-icons.css";
+import { Button } from "react-bootstrap";
+import PropTypes from "prop-types";
 
-const CustomNavbar = () => {
+const CustomNavbar = ({ isLoggedIn, handleLogout, handleLogin }) => {
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
-      <Container>
-        <Navbar.Brand href="#home">
-          <strong style={{ fontSize: "24px" }}>Meme Game</strong>
-        </Navbar.Brand>
-        <Form inline className="ml-auto">
-          <InputGroup>
-            <Form.Control type="text" placeholder="email" className="mr-sm-2" />
-            <Form.Control
-              type="password"
-              placeholder="password"
-              className="mr-sm-2"
-            />
-            <Button variant="outline-primary">Login</Button>
-          </InputGroup>
-        </Form>
-      </Container>
-    </Navbar>
+    <>
+      <Navbar expand="lg" className="bg-body-tertiary">
+        <Container>
+          <Navbar.Brand href="#home">
+            <strong style={{ fontSize: "24px" }}>Meme Game</strong>
+          </Navbar.Brand>
+          {isLoggedIn ? (
+            <>
+              <Button variant="outline-primary">
+                <i className="bi bi-person-fill"></i>
+              </Button>
+              <LogoutButton handleLogout={handleLogout} />
+            </>
+          ) : (
+            <LoginForm handleLogin={handleLogin} />
+          )}
+        </Container>
+      </Navbar>
+    </>
   );
+};
+
+CustomNavbar.propTypes = {
+  isLoggedIn: PropTypes.bool.isRequired,
+  handleLogin: PropTypes.func.isRequired,
+  handleLogout: PropTypes.func.isRequired,
 };
 
 export default CustomNavbar;

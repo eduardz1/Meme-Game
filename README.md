@@ -1,13 +1,14 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/AVMm0VzU)
+
 # Exam #N: "Exam Title"
-## Student: s123456 LASTNAME FIRSTNAME 
+
+## Student: s123456 LASTNAME FIRSTNAME
 
 ## React Client Application Routes
 
 - Route `/`: page content and purpose
 - Route `/something/:param`: page content and purpose, param specification
 - ...
-
 
 ## Main React Components
 
@@ -16,7 +17,6 @@
 - ...
 
 (only _main_ components, minor ones may be skipped)
-
 
 ## API Server
 
@@ -32,18 +32,19 @@
   - request parameters and request body content
   - response body content
   - response status codes and possible errors -->
+
 - GET `/meme-game/history`:
 - GET `/meme-game/history/:id`:
 - GET `/meme-game/users/:email`:
-- 
+-
 
 ## Database Tables
 
 <!-- Write the SQL code of the database -->
+
 - Table `users` - short description of its contents
 - Table `something` - short description of its contents
 - ...
-
 
 ## Screenshots
 
@@ -51,8 +52,9 @@
 
 ![Screenshot2](./img/screenshot.jpg)
 
-
 ## Users Credentials
 
-- username, password (plus any other requested info)
-- username, password (plus any other requested info)
+| **Email**                            | **Password** |
+| ------------------------------------ | ------------ |
+| eduard.occhipinti@studenti.polito.it | funghi       |
+| miriam.lamari@studenti.polito.it     | gelato       |
