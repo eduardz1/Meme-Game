@@ -3,6 +3,7 @@ import express from "express";
 import Authenticator from "./auth.mjs";
 import AuthRoutes from "./routers/auth.mjs";
 import MemeRoutes from "./routers/meme.mjs";
+import GameRoutes from "./routers/game.mjs";
 
 const PREFIX = "/api";
 
@@ -18,9 +19,11 @@ function initRoutes(app) {
 
   const authRoutes = new AuthRoutes(authenticator);
   const memeRoutes = new MemeRoutes();
+  const gameRoutes = new GameRoutes(authenticator);
 
   app.use(`${PREFIX}/sessions`, authRoutes.getRouter());
   app.use(`${PREFIX}/memes`, memeRoutes.getRouter());
+  app.use(`${PREFIX}/games`, gameRoutes.getRouter());
 }
 
 export default initRoutes;

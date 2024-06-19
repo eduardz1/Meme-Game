@@ -1,5 +1,6 @@
 import crypto from "crypto";
 import db from "../db/db.mjs";
+import { Buffer } from "buffer";
 
 class UserDAO {
   async getUser(email, password) {

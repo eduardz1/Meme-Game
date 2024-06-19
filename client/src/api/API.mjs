@@ -1,5 +1,11 @@
 const SERVER_URL = "http://localhost:3001/api";
 
+function handleErrors(response) {
+  if (response.error) throw Error(response.error);
+  if (response.message) throw Error(response.message);
+  throw Error("Something went wrong");
+}
+
 /** --------------------------- Access APIs --------------------------------- */
 
 async function login(email, password) {
@@ -14,14 +20,18 @@ async function login(email, password) {
 
   if (response.ok) return response.json();
 
-  throw response.text();
+  handleErrors(response);
 }
 
 async function logout() {
-  await fetch(`${SERVER_URL}/sessions`, {
+  const response = await fetch(`${SERVER_URL}/sessions`, {
     method: "DELETE",
     credentials: "include",
   });
+
+  if (response.ok) return response.json();
+
+  handleErrors(response);
 }
 
 async function getUserInfo() {
@@ -32,47 +42,51 @@ async function getUserInfo() {
 
   if (response.ok) return response.json();
 
-  throw response.text();
+  handleErrors(response);
 }
 
 /** ---------------------------- Game APIs ---------------------------------- */
 
-async function play() {
+async function recordGame(userId, rounds) {
   const response = await fetch(`${SERVER_URL}/games`, {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
     credentials: "include",
+    body: JSON.stringify({ userId, rounds }),
   });
 
   if (response.ok) return response.json();
 
-  throw response.text();
+  handleErrors(response);
 }
 
 /** ---------------------------- Meme APIs ---------------------------------- */
 
-async function getMeme(memeId) {
-  const response = await fetch(`${SERVER_URL}/memes/${memeId}`, {
+async function getMeme(id) {
+  const response = await fetch(`${SERVER_URL}/memes/${id}`, {
     method: "GET",
   });
 
   if (response.ok) return response.json();
 
-  throw response.text();
+  handleErrors(response);
 }
 
 async function getRandomMemes(count) {
-  const response = await fetch(`${SERVER_URL}/memes/random/${count}`, {
+  const response = await fetch(`${SERVER_URL}/memes/random?count=${count}`, {
     method: "GET",
   });
 
   if (response.ok) return response.json();
 
-  throw response.text();
+  handleErrors(response);
 }
 
-async function getCorrectCaptions(memeId, count) {
+async function getCorrectCaptions(id, count) {
   const response = await fetch(
-    `${SERVER_URL}/memes/${memeId}/captions/correct/${count}`,
+    `${SERVER_URL}/memes/${id}/captions/correct?count=${count}`,
     {
       method: "GET",
     }
@@ -80,12 +94,12 @@ async function getCorrectCaptions(memeId, count) {
 
   if (response.ok) return response.json();
 
-  throw response.text();
+  handleErrors(response);
 }
 
-async function getIncorrectCaptions(memeId, count) {
+async function getIncorrectCaptions(id, count) {
   const response = await fetch(
-    `${SERVER_URL}/memes/${memeId}/captions/incorrect/${count}`,
+    `${SERVER_URL}/memes/${id}/captions/incorrect?count=${count}`,
     {
       method: "GET",
     }
@@ -93,14 +107,14 @@ async function getIncorrectCaptions(memeId, count) {
 
   if (response.ok) return response.json();
 
-  throw response.text();
+  handleErrors(response);
 }
 
 const API = {
   login,
   logout,
   getUserInfo,
-  play,
+  recordGame,
   getMeme,
   getRandomMemes,
   getCorrectCaptions,

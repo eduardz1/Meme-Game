@@ -17,13 +17,13 @@ class AuthRoutes {
       "/",
       body("email").trim().isEmail(),
       body("password").isString().notEmpty({ ignore_whitespace: true }),
-      this.authenticator.login
+      this.authenticator.login,
     );
 
     this.router.delete("/", this.authenticator.logout);
 
     this.router.get("/current", this.authenticator.isLoggedIn, (req, res) =>
-      res.json(req.user)
+      res.json(req.user),
     );
   }
 }

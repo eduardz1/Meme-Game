@@ -16,10 +16,13 @@ class Authenticator {
         secret: "Samurai Jack!",
         resave: false,
         saveUninitialized: false,
-      })
+      }),
     );
 
     this.app.use(passport.authenticate("session"));
+
+    this.app.use(passport.initialize());
+    this.app.use(passport.session());
 
     passport.use(
       new LocalStrategy(
@@ -40,8 +43,8 @@ class Authenticator {
               return done(null, user);
             })
             .catch((err) => done(err));
-        }
-      )
+        },
+      ),
     );
 
     passport.serializeUser((user, done) => done(null, user));
@@ -49,7 +52,7 @@ class Authenticator {
     passport.deserializeUser((user, done) =>
       // TODO: Implement check on user in database
       // this.dao.getUserByEmail(email).then((user) => done(null, user))
-      done(null, user)
+      done(null, user),
     );
   }
 

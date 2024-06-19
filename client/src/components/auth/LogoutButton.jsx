@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 const LogoutButton = ({ handleLogout }) => {
   return (
-    <Button variant="danger" onClick={handleLogout}>
+    <Button variant="outline-danger" onClick={handleLogout}>
       Logout
     </Button>
   );
