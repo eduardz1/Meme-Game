@@ -3,14 +3,16 @@ import db from "../db/db.mjs";
 
 class UserDAO {
   async getUser(email, password) {
-    return new Promise((resolve, _reject) => {
+    return new Promise((resolve, reject) => {
       const sql = "SELECT * FROM User WHERE email = ?";
 
       const row = db.prepare(sql).get(email);
 
       if (!row) resolve(null);
 
-      crypto.scrypt(password, row.salt, 32, (_err, hashedPassword) => {
+      crypto.scrypt(password, row.salt, 32, (err, hashedPassword) => {
+        if (err) reject(err);
+
         if (
           !crypto.timingSafeEqual(Buffer.from(row.hash, "hex"), hashedPassword)
         )

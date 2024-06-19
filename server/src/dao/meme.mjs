@@ -1,35 +1,30 @@
 import db from "../db/db.mjs";
-import Meme from "../components/meme.mjs";
 
 class MemeDAO {
-  static getMemes() {
-    const memes = db.prepare("SELECT * FROM Meme").all();
-
-    memes.map((meme) => {
-      const captions = db
-        .prepare("SELECT * FROM Caption WHERE idMeme = ?")
-        .all(meme.id);
-
-      return new Meme(meme.path, captions);
-    });
-
-    return memes;
+  getMeme(id) {
+    return db.prepare("SELECT * FROM Meme WHERE id = ?").get(id);
   }
 
   getRandomMemes(count) {
-    const memes = db
+    return db
       .prepare("SELECT * FROM Meme ORDER BY RANDOM() LIMIT ?")
       .all(count);
+  }
 
-    memes.map((meme) => {
-      const captions = db
-        .prepare("SELECT * FROM Caption WHERE idMeme = ?")
-        .all(meme.id);
+  getCorrectCaptions(id, count) {
+    return db
+      .prepare(
+        "SELECT * FROM CorrectCaption WHERE idMeme = ? ORDER BY RANDOM() LIMIT ?"
+      )
+      .all(id, count);
+  }
 
-      return new Meme(meme.path, captions);
-    });
-
-    return memes;
+  getIncorrectCaptions(id, count) {
+    return db
+      .prepare(
+        "SELECT * FROM CorrectCaption WHERE idMeme <> ? ORDER BY RANDOM() LIMIT ?"
+      )
+      .all(id, count);
   }
 }
 

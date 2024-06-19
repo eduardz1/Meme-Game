@@ -12,9 +12,7 @@ async function login(email, password) {
     body: JSON.stringify({ email, password }),
   });
 
-  if (response.ok) {
-    return response.json();
-  }
+  if (response.ok) return response.json();
 
   throw response.text();
 }
@@ -50,11 +48,63 @@ async function play() {
   throw response.text();
 }
 
+/** ---------------------------- Meme APIs ---------------------------------- */
+
+async function getMeme(memeId) {
+  const response = await fetch(`${SERVER_URL}/memes/${memeId}`, {
+    method: "GET",
+  });
+
+  if (response.ok) return response.json();
+
+  throw response.text();
+}
+
+async function getRandomMemes(count) {
+  const response = await fetch(`${SERVER_URL}/memes/random/${count}`, {
+    method: "GET",
+  });
+
+  if (response.ok) return response.json();
+
+  throw response.text();
+}
+
+async function getCorrectCaptions(memeId, count) {
+  const response = await fetch(
+    `${SERVER_URL}/memes/${memeId}/captions/correct/${count}`,
+    {
+      method: "GET",
+    }
+  );
+
+  if (response.ok) return response.json();
+
+  throw response.text();
+}
+
+async function getIncorrectCaptions(memeId, count) {
+  const response = await fetch(
+    `${SERVER_URL}/memes/${memeId}/captions/incorrect/${count}`,
+    {
+      method: "GET",
+    }
+  );
+
+  if (response.ok) return response.json();
+
+  throw response.text();
+}
+
 const API = {
   login,
   logout,
   getUserInfo,
   play,
+  getMeme,
+  getRandomMemes,
+  getCorrectCaptions,
+  getIncorrectCaptions,
 };
 
 export default API;

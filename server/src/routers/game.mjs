@@ -17,3 +17,5 @@ class GameRoutes {
     });
   }
 }
+
+export default GameRoutes;

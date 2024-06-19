@@ -1,6 +1,5 @@
 import { Button } from "react-bootstrap";
 import { useState } from "react";
-import "./PlayButton.css";
 
 const PlayButton = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -13,9 +12,20 @@ const PlayButton = () => {
   };
 
   return (
-    <Button size="huge" onClick={handlePlay}>
-      PLAY
-    </Button>
+    <>
+      <style>{`
+        .btn-huge {
+          padding: 1rem 5rem;
+          font-size: 5rem;
+          letter-spacing: 0.2rem;
+          font-weight: bold;
+        }
+      `}</style>
+
+      <Button size="huge" onClick={handlePlay}>
+        PLAY
+      </Button>
+    </>
   );
 };
 

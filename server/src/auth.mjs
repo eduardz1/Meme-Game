@@ -16,7 +16,7 @@ class Authenticator {
         secret: "Samurai Jack!",
         resave: false,
         saveUninitialized: false,
-      }),
+      })
     );
 
     this.app.use(passport.authenticate("session"));
@@ -40,8 +40,8 @@ class Authenticator {
               return done(null, user);
             })
             .catch((err) => done(err));
-        },
-      ),
+        }
+      )
     );
 
     passport.serializeUser((user, done) => done(null, user));
@@ -49,7 +49,7 @@ class Authenticator {
     passport.deserializeUser((user, done) =>
       // TODO: Implement check on user in database
       // this.dao.getUserByEmail(email).then((user) => done(null, user))
-      done(null, user),
+      done(null, user)
     );
   }
 
@@ -57,10 +57,7 @@ class Authenticator {
     passport.authenticate("local", (err, user, info) => {
       if (err) return next(err);
 
-      if (!user) {
-        console.log(err, user, info);
-        return res.status(401).json(info);
-      }
+      if (!user) return res.status(401).json(info);
 
       req.logIn(user, (err) => {
         if (err) return next(err);
@@ -71,9 +68,7 @@ class Authenticator {
   }
 
   logout(req, res) {
-    req.logout(() => {
-      res.end();
-    });
+    req.logout(() => res.end());
     res.json({ message: "Logged out" });
   }
 

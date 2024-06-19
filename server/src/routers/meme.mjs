@@ -18,7 +18,7 @@ class MemeRoutes {
       "/random",
       body("count").isInt({ min: 1, max: 10 }).toInt(),
       async (req, res) => {
-        const meme = await this.dao.getRandomMemes(req.body.count);
+        const meme = this.dao.getRandomMemes(req.body.count);
         res.json(meme);
       },
     );
