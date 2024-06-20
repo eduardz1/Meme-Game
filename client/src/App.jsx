@@ -102,10 +102,6 @@ const App = () => {
   };
 
   useEffect(() => {
-    console.log(memes);
-  }, [memes]);
-
-  useEffect(() => {
     API.getUserInfo()
       .then((user) => {
         setLoggedIn(true);

@@ -14,7 +14,7 @@ const LoginForm = ({ handleLogin }) => {
   };
 
   return (
-    <Form inline className="ml-auto" onSubmit={handleSubmit}>
+    <Form className="ml-auto" onSubmit={handleSubmit}>
       <InputGroup>
         <Form.Control
           type="email"

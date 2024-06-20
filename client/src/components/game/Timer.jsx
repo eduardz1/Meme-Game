@@ -49,18 +49,32 @@ const Timer = ({ handleClick }) => {
     Ref.current = id;
   };
 
-  useEffect(() => {
+  const getTimerEnd = () => {
     let deadline = new Date();
     deadline.setSeconds(deadline.getSeconds() + TIMER_DURATION);
+    return deadline;
+  };
 
-    startTimer(deadline);
+  const resetTimer = () => {
+    setOffset(CIRCUMFERENCE);
+    startTimer(getTimerEnd());
+  };
+
+  useEffect(() => {
+    resetTimer();
+  }, [handleClick]);
+
+  useEffect(() => {
+    startTimer(getTimerEnd());
   }, []);
 
   return (
     <div
       style={{
-        textAlign: "center",
-        margin: "auto",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        position: "relative",
         animation: timer === 0 ? "shake 0.5s" : "none",
       }}
     >
@@ -84,6 +98,7 @@ const Timer = ({ handleClick }) => {
           style={{
             stroke: "var(--color)",
             transition: "stroke 0.5s ease-in-out",
+            strokeLinecap: "round",
           }}
           fill="transparent"
           strokeWidth={STROKE_WIDTH}
@@ -93,18 +108,18 @@ const Timer = ({ handleClick }) => {
           cx={RADIUS + STROKE_WIDTH}
           cy={RADIUS + STROKE_WIDTH}
         />
-        <text
-          x="50%"
-          y="50%"
-          textAnchor="middle"
-          stroke="black"
-          strokeWidth="2px"
-          dy=".3em"
-          fontSize="30"
-        >
-          {timer}
-        </text>
       </svg>
+      <div
+        style={{
+          position: "absolute",
+          textAnchor: "middle",
+          stroke: "black",
+          fontWeight: "bold",
+          fontSize: "1.5rem",
+        }}
+      >
+        {timer}
+      </div>
     </div>
   );
 };

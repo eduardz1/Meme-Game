@@ -20,7 +20,7 @@ const Round = ({ endRound, meme }) => {
     setTimeout(() => {
       endRound({
         idMeme: meme.id,
-        idCaption: index ? meme.captions[index].id : null,
+        idCaption: index === null ? null : meme.captions[index].id,
         score: isCorrectGuess ? POINTS_CORRECT_GUESS : POINTS_INCORRECT_GUESS,
       });
     }, 1000);

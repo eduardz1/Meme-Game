@@ -1,16 +1,16 @@
 import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
 import Round from "./Round";
+import EndScreen from "./EndScreen";
 
 const Game = ({ memes, endGame }) => {
   const [rounds, setRounds] = useState([]);
   const [currentRound, setCurrentRound] = useState(0);
+  const [isConfirmed, setConfirmed] = useState(false);
 
   useEffect(() => {
-    if (currentRound === memes.length) {
-      endGame(rounds);
-    }
-  }, [currentRound]);
+    if (isConfirmed) endGame(rounds);
+  }, [isConfirmed]);
 
   const endRound = ({ idMeme, idCaption, score }) => {
     setRounds([...rounds, { idMeme, idCaption, score }]);
@@ -19,7 +19,7 @@ const Game = ({ memes, endGame }) => {
 
   return (
     <>
-      {currentRound < memes.length && (
+      {currentRound < memes.length ? (
         <div style={{ paddingTop: "20px" }}>
           <Round
             endRound={endRound}
@@ -35,6 +35,8 @@ const Game = ({ memes, endGame }) => {
             }}
           />
         </div>
+      ) : (
+        <EndScreen setConfirmed={setConfirmed} rounds={rounds} />
       )}
     </>
   );

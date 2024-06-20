@@ -10,15 +10,17 @@ class GameDAO {
 
     const gameId = insertGame.run(userId).lastInsertRowid;
 
-    const inserRound = db.prepare(
-      "INSERT INTO Round (idGame, idMeme, idCaption, score) VALUES (?, ?, ?, ?)",
+    const insertRound = db.prepare(
+      "INSERT INTO Round (idGame, idMeme, idCaption, score) VALUES (?, ?, ?, ?)"
     );
 
-    return db.transaction(() => {
+    db.transaction(() => {
       for (const round of rounds) {
-        inserRound.run(gameId, round.idMeme, round.idCaption, round.score);
+        insertRound.run(gameId, round.idMeme, round.idCaption, round.score);
       }
     })();
+
+    return gameId;
   }
 }
 
