@@ -14,6 +14,9 @@ const Round = ({ endRound, meme }) => {
   const [clickedButton, setClickedButton] = useState(null);
   const [isCorrect, setIsCorrect] = useState(null);
 
+  // Used to avoid showing the captions a split second before the image
+  const [imageLoaded, setImageLoaded] = useState(false);
+
   const handleClick = (index, isCorrectGuess) => {
     setClickedButton(index);
     setIsCorrect(isCorrectGuess);
@@ -22,6 +25,8 @@ const Round = ({ endRound, meme }) => {
         idMeme: meme.id,
         idCaption: index === null ? null : meme.captions[index].id,
         score: isCorrectGuess ? POINTS_CORRECT_GUESS : POINTS_INCORRECT_GUESS,
+        tag: meme.tag,
+        caption: meme.captions[index].caption,
       });
     }, 1000);
   };
@@ -56,62 +61,72 @@ const Round = ({ endRound, meme }) => {
               alt={meme.tag.split(".")[0].replace(/-/g, " ")}
               rounded
               className="img-fluid w-100"
+              onLoad={() => setImageLoaded(true)}
             />
           </Col>
         </Row>
-        {meme.captions.map((caption, index) => (
-          <Row key={index} className="mb-3">
-            <Col>
-              <style>{`
-                    .btn-danger {
-                        transition: all 0.5s ease;
-                        animation: shake 0.5s forwards;
-                    }
+        {imageLoaded &&
+          meme.captions.map((caption, index) => (
+            <Row key={index} className="mb-3">
+              <Col>
+                <style>{`
+                  .btn-danger {
+                      transition: all 0.5s ease;
+                      animation: shake 0.5s forwards;
+                  }
 
-                    .btn:active {
-                        transform: scale(0.9);
-                        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
-                    }
+                  .btn:active {
+                      transform: scale(0.9);
+                      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+                  }
 
-                    @keyframes shake {
-                        0% { transform: translate(1px, 1px) rotate(0deg); }
-                        10% { transform: translate(-1px, -2px) rotate(-1deg); }
-                        20% { transform: translate(-3px, 0px) rotate(1deg); }
-                        30% { transform: translate(3px, 2px) rotate(0deg); }
-                        40% { transform: translate(1px, -1px) rotate(1deg); }
-                        50% { transform: translate(-1px, 2px) rotate(-1deg); }
-                        60% { transform: translate(-3px, 1px) rotate(0deg); }
-                        70% { transform: translate(3px, 1px) rotate(-1deg); }
-                        80% { transform: translate(-1px, -1px) rotate(1deg); }
-                        90% { transform: translate(1px, 2px) rotate(0deg); }
-                        100% { transform: translate(1px, -2px) rotate(-1deg); }
-                    }
+                  @keyframes shake {
+                      0% { transform: translate(1px, 1px) rotate(0deg); }
+                      10% { transform: translate(-1px, -2px) rotate(-1deg); }
+                      20% { transform: translate(-3px, 0px) rotate(1deg); }
+                      30% { transform: translate(3px, 2px) rotate(0deg); }
+                      40% { transform: translate(1px, -1px) rotate(1deg); }
+                      50% { transform: translate(-1px, 2px) rotate(-1deg); }
+                      60% { transform: translate(-3px, 1px) rotate(0deg); }
+                      70% { transform: translate(3px, 1px) rotate(-1deg); }
+                      80% { transform: translate(-1px, -1px) rotate(1deg); }
+                      90% { transform: translate(1px, 2px) rotate(0deg); }
+                      100% { transform: translate(1px, -2px) rotate(-1deg); }
+                  }
                 `}</style>
-              <Button
-                variant={
-                  clickedButton === index
-                    ? isCorrect
-                      ? "success"
-                      : "danger"
-                    : "light"
-                }
-                size="lg"
-                className="w-100"
-                style={{
-                  fontFamily: "Impact",
-                  textTransform: "uppercase",
-                  fontSize: "2rem",
-                  color: "white",
-                  textShadow:
-                    "-2px -2px 0px black, 2px -2px 0px black, -2px 2px 0px black, 2px 2px 0px black",
-                }}
-                onClick={() => handleClick(index, caption.isCorrect)}
-              >
-                {caption.caption}
-              </Button>
-            </Col>
-          </Row>
-        ))}
+                <Button
+                  variant={
+                    // If the button has been clicked, show the success or
+                    // danger variant based on whether the caption is correct.
+                    // If a button has been clicked and it was the incorrect
+                    // one, show the success variants for the correct captions.
+                    clickedButton === index
+                      ? isCorrect
+                        ? "success"
+                        : "danger"
+                      : clickedButton !== null &&
+                          caption.isCorrect &&
+                          !isCorrect
+                        ? "success"
+                        : "light"
+                  }
+                  size="lg"
+                  className="w-100"
+                  style={{
+                    fontFamily: "Impact",
+                    textTransform: "uppercase",
+                    fontSize: "2rem",
+                    color: "white",
+                    textShadow:
+                      "-2px -2px 0px black, 2px -2px 0px black, -2px 2px 0px black, 2px 2px 0px black",
+                  }}
+                  onClick={() => handleClick(index, caption.isCorrect)}
+                >
+                  {caption.caption}
+                </Button>
+              </Col>
+            </Row>
+          ))}
       </Container>
     </>
   );

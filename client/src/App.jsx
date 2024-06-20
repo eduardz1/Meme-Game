@@ -2,8 +2,11 @@ import { useEffect } from "react";
 import { useState } from "react";
 import CustomNavbar from "./components/CustomNavbar";
 import API from "./api/API.mjs";
-import PlayButton from "./components/PlayButton";
+import PlayButton from "./components/game/PlayButton";
 import Game from "./components/game/Game";
+import { Routes, Route, useNavigate } from "react-router-dom";
+import Profile from "./components/user/Profile";
+import ErrorPage from "./components/ErrorPage";
 
 const NUM_MEMES_LOGGED_IN = 3;
 const NUM_MEMES_NOT_LOGGED_IN = 1;
@@ -13,9 +16,10 @@ const NUM_INCORRECT_CAPTIONS = 5;
 const App = () => {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [memes, setMemes] = useState([]);
-  const [isPlaying, setIsPlaying] = useState(false);
   const [user, setUser] = useState(null);
   const [message, setMessage] = useState({ msg: "", type: "" });
+
+  const navigate = useNavigate();
 
   const handleLogin = async (email, password) => {
     try {
@@ -76,7 +80,7 @@ const App = () => {
       setMemes(updatedMemes);
 
       setTimeout(() => {
-        setIsPlaying(true);
+        navigate("/play");
       }, 50); // Makes it feel a bit better
     } catch (error) {
       setMessage({ msg: error.message, type: "danger" });
@@ -87,7 +91,7 @@ const App = () => {
     try {
       if (isLoggedIn) await API.recordGame(user.id, rounds);
 
-      setIsPlaying(false);
+      navigate("/");
       setMemes([]);
     } catch (error) {
       setMessage({ msg: error.message, type: "danger" });
@@ -122,30 +126,18 @@ const App = () => {
         handleLogout={handleLogout}
         isLoggedIn={isLoggedIn}
       />
-      {isPlaying ? (
-        <Game memes={memes} isPlaying={isPlaying} endGame={endGame} />
-      ) : (
-        <div
-          style={{
-            position: "absolute",
-            top: "40%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-          }}
-        >
-          <PlayButton onStartGame={startGame} isPlaying={isPlaying} />
-        </div>
-      )}
-
-      <p
-        style={{
-          position: "absolute",
-          bottom: 0,
-          color: message.type === "danger" ? "red" : "green",
-        }}
-      >
-        {message.msg}
-      </p>
+      <Routes>
+        <Route
+          path="/"
+          element={<PlayButton onStartGame={startGame} />}
+        ></Route>
+        <Route
+          path="play"
+          element={<Game memes={memes} endGame={endGame} />}
+        ></Route>
+        <Route path="profile" element={<Profile />}></Route>
+        <Route path="*" element={<ErrorPage />}></Route>
+      </Routes>
     </div>
   );
 };

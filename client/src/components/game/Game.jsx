@@ -9,11 +9,17 @@ const Game = ({ memes, endGame }) => {
   const [isConfirmed, setConfirmed] = useState(false);
 
   useEffect(() => {
-    if (isConfirmed) endGame(rounds);
+    // Filter out unnecessary fields
+    const cleanedUpRounds = rounds.map((round) => {
+      const { idMeme, idCaption, score, tag, caption } = round;
+      return { idMeme, idCaption, score };
+    });
+
+    if (isConfirmed) endGame(cleanedUpRounds);
   }, [isConfirmed]);
 
-  const endRound = ({ idMeme, idCaption, score }) => {
-    setRounds([...rounds, { idMeme, idCaption, score }]);
+  const endRound = ({ idMeme, idCaption, score, tag, caption }) => {
+    setRounds([...rounds, { idMeme, idCaption, score, tag, caption }]);
     setCurrentRound(currentRound + 1);
   };
 
