@@ -126,32 +126,30 @@ const App = () => {
         handleLogout={handleLogout}
         isLoggedIn={isLoggedIn}
       />
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-        }}
-      >
-        {isPlaying ? (
-          <Game memes={memes} isPlaying={isPlaying} endGame={endGame} />
-        ) : (
-          <div style={{ transform: "translateY(-120%)" }}>
-            <PlayButton onStartGame={startGame} isPlaying={isPlaying} />
-          </div>
-        )}
-
-        <p
+      {isPlaying ? (
+        <Game memes={memes} isPlaying={isPlaying} endGame={endGame} />
+      ) : (
+        <div
           style={{
             position: "absolute",
-            bottom: 0,
-            color: message.type === "danger" ? "red" : "green",
+            top: "40%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
           }}
         >
-          {message.msg}
-        </p>
-      </div>
+          <PlayButton onStartGame={startGame} isPlaying={isPlaying} />
+        </div>
+      )}
+
+      <p
+        style={{
+          position: "absolute",
+          bottom: 0,
+          color: message.type === "danger" ? "red" : "green",
+        }}
+      >
+        {message.msg}
+      </p>
     </div>
   );
 };

@@ -20,7 +20,21 @@ const Game = ({ memes, endGame }) => {
   return (
     <>
       {currentRound < memes.length && (
-        <Round endRound={endRound} meme={memes[currentRound]} />
+        <div style={{ paddingTop: "20px" }}>
+          <Round
+            endRound={endRound}
+            meme={memes[currentRound]}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100%",
+              width: "100%",
+              overflow: "auto",
+              paddingTop: "100px",
+            }}
+          />
+        </div>
       )}
     </>
   );

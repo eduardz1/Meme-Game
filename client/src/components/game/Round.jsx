@@ -5,6 +5,7 @@ import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
 import Row from "react-bootstrap/Row";
 import { useState, useEffect } from "react";
+import Timer from "./Timer";
 
 const POINTS_CORRECT_GUESS = 5;
 const POINTS_INCORRECT_GUESS = 0;
@@ -19,7 +20,7 @@ const Round = ({ endRound, meme }) => {
     setTimeout(() => {
       endRound({
         idMeme: meme.id,
-        idCaption: meme.captions[index].id,
+        idCaption: index ? meme.captions[index].id : null,
         score: isCorrectGuess ? POINTS_CORRECT_GUESS : POINTS_INCORRECT_GUESS,
       });
     }, 1000);
@@ -31,23 +32,37 @@ const Round = ({ endRound, meme }) => {
 
   return (
     <>
-      <Container fluid="lg">
-        <div style={{ display: "inline-block" }}>
-          <Row className="mb-3">
+      <Container fluid="md">
+        <Row className="mb-3">
+          <Col
+            style={{
+              position: "relative",
+              display: "inline-flex",
+            }}
+          >
+            <div
+              style={{
+                position: "absolute",
+                top: 0,
+                right: 0,
+                zIndex: 1,
+                padding: "20px 40px 0 0",
+              }}
+            >
+              <Timer handleClick={handleClick} />
+            </div>
+            <Image
+              src={`memes/${meme.tag}`}
+              alt={meme.tag.split(".")[0].replace(/-/g, " ")}
+              rounded
+              className="img-fluid w-100"
+            />
+          </Col>
+        </Row>
+        {meme.captions.map((caption, index) => (
+          <Row key={index} className="mb-3">
             <Col>
-              <Image
-                src={`memes/${meme.tag}`}
-                alt={meme.tag.split(".")[0].replace(/-/g, " ")}
-                rounded
-                fluid
-                style={{ minHeight: "50vh", maxHeight: "70vh" }}
-              />
-            </Col>
-          </Row>
-          {meme.captions.map((caption, index) => (
-            <Row key={index} className="mb-3">
-              <Col>
-                <style>{`
+              <style>{`
                     .btn-danger {
                         transition: all 0.5s ease;
                         animation: shake 0.5s forwards;
@@ -72,32 +87,31 @@ const Round = ({ endRound, meme }) => {
                         100% { transform: translate(1px, -2px) rotate(-1deg); }
                     }
                 `}</style>
-                <Button
-                  variant={
-                    clickedButton === index
-                      ? isCorrect
-                        ? "success"
-                        : "danger"
-                      : "light"
-                  }
-                  size="lg"
-                  className="w-100"
-                  style={{
-                    fontFamily: "Impact",
-                    textTransform: "uppercase",
-                    fontSize: "2rem",
-                    color: "white",
-                    textShadow:
-                      "-2px -2px 0px black, 2px -2px 0px black, -2px 2px 0px black, 2px 2px 0px black",
-                  }}
-                  onClick={() => handleClick(index, caption.isCorrect)}
-                >
-                  {caption.caption}
-                </Button>
-              </Col>
-            </Row>
-          ))}
-        </div>
+              <Button
+                variant={
+                  clickedButton === index
+                    ? isCorrect
+                      ? "success"
+                      : "danger"
+                    : "light"
+                }
+                size="lg"
+                className="w-100"
+                style={{
+                  fontFamily: "Impact",
+                  textTransform: "uppercase",
+                  fontSize: "2rem",
+                  color: "white",
+                  textShadow:
+                    "-2px -2px 0px black, 2px -2px 0px black, -2px 2px 0px black, 2px 2px 0px black",
+                }}
+                onClick={() => handleClick(index, caption.isCorrect)}
+              >
+                {caption.caption}
+              </Button>
+            </Col>
+          </Row>
+        ))}
       </Container>
     </>
   );
