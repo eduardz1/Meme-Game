@@ -5,15 +5,6 @@ import db from "../db/db.mjs";
  */
 class MemeDAO {
   /**
-   * Returns a meme by ID.
-   * @param {number} id - Meme ID
-   * @returns {Promise<Object>} Meme object
-   */
-  static getMeme(id) {
-    return db.prepare("SELECT * FROM Meme WHERE id = ?").get(id);
-  }
-
-  /**
    * Returns a random meme.
    * @param {number} count - Number of memes to fetch
    * @returns {Promise<Array>} Array of memes

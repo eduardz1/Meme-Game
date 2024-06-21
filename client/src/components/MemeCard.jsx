@@ -4,17 +4,18 @@ import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import PropTypes from "prop-types";
 
-const MemesCard = ({ rounds }) => {
+const MemesCard = ({ rounds, fontSize }) => {
   return (
     <>
       {rounds.map((round, index) => (
         <Card
+          key={index}
           className="mt-3"
           text="light"
           bg={round.score == 0 ? "danger" : "success"}
         >
           <Card.Body className="text-center">
-            <Row key={index} className="d-flex align-items-center mt-3">
+            <Row className="d-flex align-items-center mt-3">
               <Col
                 style={{
                   position: "relative",
@@ -34,7 +35,7 @@ const MemesCard = ({ rounds }) => {
                     padding: "10px 10px 10px 10px",
                     fontFamily: "Impact",
                     textTransform: "uppercase",
-                    fontSize: "1.5rem",
+                    fontSize: fontSize || "1.5rem",
                     color: "white",
                     textAlign: "center",
                     width: "95%",
@@ -47,6 +48,9 @@ const MemesCard = ({ rounds }) => {
               </Col>
             </Row>
           </Card.Body>
+          <Card.Footer>
+            <h4>Points scored: {round.score}</h4>
+          </Card.Footer>
         </Card>
       ))}
     </>
@@ -55,6 +59,7 @@ const MemesCard = ({ rounds }) => {
 
 MemesCard.propTypes = {
   rounds: PropTypes.array,
+  fontSize: PropTypes.string,
 };
 
 export default MemesCard;

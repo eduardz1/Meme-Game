@@ -47,14 +47,14 @@ async function getUserInfo() {
 
 /** ---------------------------- Game APIs ---------------------------------- */
 
-async function recordGame(idUser, rounds) {
+async function recordGame(rounds) {
   const response = await fetch(`${SERVER_URL}/games`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     credentials: "include",
-    body: JSON.stringify({ idUser, rounds }),
+    body: JSON.stringify({ rounds }),
   });
 
   if (response.ok) return response.json();
@@ -62,8 +62,8 @@ async function recordGame(idUser, rounds) {
   handleErrors(response);
 }
 
-async function getGames(idUser) {
-  const response = await fetch(`${SERVER_URL}/games/${idUser}`, {
+async function getGames() {
+  const response = await fetch(`${SERVER_URL}/games`, {
     method: "GET",
     credentials: "include",
   });
@@ -74,16 +74,6 @@ async function getGames(idUser) {
 }
 
 /** ---------------------------- Meme APIs ---------------------------------- */
-
-async function getMeme(id) {
-  const response = await fetch(`${SERVER_URL}/memes/${id}`, {
-    method: "GET",
-  });
-
-  if (response.ok) return response.json();
-
-  handleErrors(response);
-}
 
 async function getRandomMemes(count) {
   const response = await fetch(`${SERVER_URL}/memes/random?count=${count}`, {
@@ -127,7 +117,6 @@ const API = {
   getUserInfo,
   recordGame,
   getGames,
-  getMeme,
   getRandomMemes,
   getCorrectCaptions,
   getIncorrectCaptions,

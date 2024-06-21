@@ -45,26 +45,6 @@ class MemeRoutes {
     );
 
     /**
-     * Fetches a meme by ID
-     * @route GET /api/memes/{id}
-     * @param {number} id.path.required - Meme ID
-     * @returns {Object} 200 - Meme object
-     */
-    this.router.get(
-      "/:id",
-      param("id").isInt(),
-      this.errorHandler.validate,
-      async (req, res, next) => {
-        try {
-          const meme = MemeDao.getMeme(req.params.id);
-          res.json(meme);
-        } catch (err) {
-          next(err);
-        }
-      }
-    );
-
-    /**
      * Fetches correct captions for a meme
      * @route GET /api/memes/{id}/captions/correct
      * @param {number} id.path.required - Meme ID

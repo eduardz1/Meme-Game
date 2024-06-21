@@ -1,16 +1,20 @@
 import PropTypes from "prop-types";
+import { useContext } from "react";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
 import Row from "react-bootstrap/Row";
 import { useState, useEffect } from "react";
+import MessageContext from "../contexts/MessageContext.mjs";
 import Timer from "./Timer";
 
 const POINTS_CORRECT_GUESS = 5;
 const POINTS_INCORRECT_GUESS = 0;
 
 const Round = ({ endRound, meme }) => {
+  const { setInfo, setError } = useContext(MessageContext);
+
   const [clickedButton, setClickedButton] = useState(null);
   const [isCorrect, setIsCorrect] = useState(null);
 
@@ -20,6 +24,13 @@ const Round = ({ endRound, meme }) => {
   const handleClick = (index, isCorrectGuess) => {
     setClickedButton(index);
     setIsCorrect(isCorrectGuess);
+    setInfo(
+      isCorrectGuess
+        ? "Correct!"
+        : index === null
+          ? "Time's up!"
+          : "Incorrect!",
+    );
     setTimeout(() => {
       endRound({
         idMeme: meme.id,

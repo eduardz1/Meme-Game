@@ -9,7 +9,12 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-const CustomNavbar = ({ isLoggedIn, handleLogout, handleLogin }) => {
+const CustomNavbar = ({
+  isLoggedIn,
+  handleLogout,
+  handleLogin,
+  fetchUserInfo,
+}) => {
   return (
     <>
       <Navbar expand="lg" className="bg-body-tertiary">
@@ -24,7 +29,7 @@ const CustomNavbar = ({ isLoggedIn, handleLogout, handleLogin }) => {
               <ButtonToolbar>
                 <ButtonGroup className="me-2" aria-label="User profile">
                   <Link to="/profile">
-                    <Button variant="outline-primary">
+                    <Button variant="outline-primary" onClick={fetchUserInfo}>
                       <i className="bi bi-person-fill"></i>
                     </Button>
                   </Link>
@@ -47,6 +52,7 @@ CustomNavbar.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
   handleLogin: PropTypes.func.isRequired,
   handleLogout: PropTypes.func.isRequired,
+  fetchUserInfo: PropTypes.func.isRequired,
 };
 
 export default CustomNavbar;
