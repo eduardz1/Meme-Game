@@ -8,20 +8,43 @@ class GameDAO {
   /**
    * Returns all games for a user, including corresponding rounds and memes.
    * @param {number} idUser - User ID
-   * @returns {Promise<Array>} Array of games
+   * @param {number} limit - Maximum number of games to return
+   * @param {number} offset - Number of games to skip
+   * @returns {Promise<Array>} Array of games, ordered by date descending
    */
-  static getGames(idUser) {
-    const getGamesAndRounds = db.prepare(`
+  static getGames(idUser, limit, offset) {
+    let selectedGames = `
       SELECT
         *
       FROM
         Game
-        JOIN Round ON Game.id = Round.idGame
-        LEFT JOIN Meme ON Round.idMeme = Meme.id
-        LEFT JOIN Caption ON Round.idCaption = Caption.id
       WHERE
         idUser = ?
-      `);
+      ORDER BY
+        date DESC`;
+
+    if (limit) {
+      selectedGames += ` LIMIT ${limit}`;
+    }
+
+    if (offset) {
+      selectedGames += ` OFFSET ${offset}`;
+    }
+
+    let sql = `
+      SELECT
+        *
+      FROM
+        (
+          ${selectedGames}
+        ) AS Game
+        JOIN Round ON Game.id = Round.idGame
+        LEFT JOIN Meme ON Round.idMeme = Meme.id
+        LEFT JOIN Caption ON Round.idCaption = Caption.id`;
+
+    console.log(sql);
+
+    const getGamesAndRounds = db.prepare(sql);
 
     const rows = getGamesAndRounds.all(idUser);
     const games = {};

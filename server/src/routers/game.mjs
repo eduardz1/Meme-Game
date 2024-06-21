@@ -1,7 +1,7 @@
 import express from "express";
 import ErrorHandler from "../errors/ErrorHandler.mjs";
 import GameDao from "../dao/game.mjs";
-import { body } from "express-validator";
+import { body, query } from "express-validator";
 
 /**
  * Class representing the game routes
@@ -26,18 +26,28 @@ class GameRoutes {
    */
   initRoutes() {
     /**
-     * Fetches all games for a user
-     * @route GET /api/games/
+     * Fetches all games for a user, ordered by date ascending
+     * @route GET /api/games?limit={limit}&offset={offset}
      * @returns {Array.<Object>} 200 - Array of games
      */
-    this.router.get("/", this.authenticator.isLoggedIn, (req, res, next) => {
-      try {
-        const games = GameDao.getGames(req.user.id);
-        res.json(games);
-      } catch (err) {
-        next(err);
+    this.router.get(
+      "/",
+      this.authenticator.isLoggedIn,
+      query("limit").optional().isInt({ gt: 0 }),
+      query("offset").optional().isInt({ min: 0 }),
+      (req, res, next) => {
+        try {
+          const games = GameDao.getGames(
+            req.user.id,
+            req.query.limit || null,
+            req.query.offset || null
+          );
+          res.json(games);
+        } catch (err) {
+          next(err);
+        }
       }
-    });
+    );
 
     /**
      * Records a new game
@@ -54,13 +64,13 @@ class GameRoutes {
       this.authenticator.isLoggedIn,
       body("rounds").isArray().isLength({ gt: 0 }),
       body("rounds.*.idMeme").isInt(),
-      body("rounds.*.idCaption").isInt(),
+      body("rounds.*.idCaption").optional({values: "null"}).isInt(),
       body("rounds.*.score").isInt(),
       this.errorHandler.validate,
       (req, res, next) => {
         try {
           const game = GameDao.recordGame(req.user.id, req.body.rounds);
-          res.json(game);
+          res.status(201).json(game);
         } catch (err) {
           next(err);
         }

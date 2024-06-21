@@ -62,11 +62,17 @@ async function recordGame(rounds) {
   handleErrors(response);
 }
 
-async function getGames() {
-  const response = await fetch(`${SERVER_URL}/games`, {
-    method: "GET",
-    credentials: "include",
-  });
+async function getGames({ limit, offset }) {
+  const response = await fetch(
+    `${SERVER_URL}/games?${new URLSearchParams({
+      limit,
+      offset,
+    })}`,
+    {
+      method: "GET",
+      credentials: "include",
+    }
+  );
 
   if (response.ok) return response.json();
 

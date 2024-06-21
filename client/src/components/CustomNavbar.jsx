@@ -8,6 +8,7 @@ import ButtonToolbar from "react-bootstrap/ButtonToolbar";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import Image from "react-bootstrap/Image";
 
 const CustomNavbar = ({
   isLoggedIn,
@@ -20,8 +21,13 @@ const CustomNavbar = ({
       <Navbar expand="lg" className="bg-body-tertiary">
         <Container>
           <Link to="/" style={{ textDecoration: "none" }}>
+            <Image
+              height={50}
+              src="favicon.ico"
+              style={{ marginTop: "-20px", marginRight: "5px" }}
+            />
             <Navbar.Brand>
-              <strong style={{ fontSize: "24px" }}>Meme Game</strong>
+              <strong style={{ fontSize: "30px" }}>Meme Game</strong>
             </Navbar.Brand>
           </Link>
           {isLoggedIn ? (

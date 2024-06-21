@@ -9,9 +9,19 @@ const PlayButton = ({ onStartGame }) => {
         top: "40%",
         left: "50%",
         transform: "translate(-50%, -50%)",
+        animation: "fadeIn 0.5s ease-out",
       }}
     >
       <style>{`
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+
         .btn-play-button {
           padding: 1rem 5rem;
           font-size: 5rem;
