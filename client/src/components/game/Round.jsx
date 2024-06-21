@@ -25,11 +25,7 @@ const Round = ({ endRound, meme }) => {
     setClickedButton(index);
     setIsCorrect(isCorrectGuess);
     setInfo(
-      isCorrectGuess
-        ? "Correct!"
-        : index === null
-          ? "Time's up!"
-          : "Incorrect!",
+      isCorrectGuess ? "Correct!" : index === null ? "Time's up!" : "Incorrect!"
     );
     setTimeout(() => {
       endRound({
@@ -48,39 +44,40 @@ const Round = ({ endRound, meme }) => {
 
   return (
     <>
-      <Container fluid="md">
-        <Row className="mb-3">
-          <Col
-            style={{
-              position: "relative",
-              display: "inline-flex",
-            }}
-          >
-            <div
+      <Col lg={8} className="mx-auto">
+        <Container fluid="md">
+          <Row className="mb-3">
+            <Col
               style={{
-                position: "absolute",
-                top: 0,
-                right: 0,
-                zIndex: 1,
-                padding: "20px 40px 0 0",
+                position: "relative",
+                display: "inline-flex",
               }}
             >
-              <Timer handleClick={handleClick} />
-            </div>
-            <Image
-              src={`memes/${meme.tag}`}
-              alt={meme.tag.split(".")[0].replace(/-/g, " ")}
-              rounded
-              className="img-fluid w-100"
-              onLoad={() => setImageLoaded(true)}
-            />
-          </Col>
-        </Row>
-        {imageLoaded &&
-          meme.captions.map((caption, index) => (
-            <Row key={index} className="mb-3">
-              <Col>
-                <style>{`
+              <div
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  right: 0,
+                  zIndex: 1,
+                  padding: "20px 40px 0 0",
+                }}
+              >
+                <Timer handleClick={handleClick} />
+              </div>
+              <Image
+                src={`memes/${meme.tag}`}
+                alt={meme.tag.split(".")[0].replace(/-/g, " ")}
+                rounded
+                className="img-fluid w-100"
+                onLoad={() => setImageLoaded(true)}
+              />
+            </Col>
+          </Row>
+          {imageLoaded &&
+            meme.captions.map((caption, index) => (
+              <Row key={index} className="mb-3">
+                <Col>
+                  <style>{`
                   .btn-danger {
                       transition: all 0.5s ease;
                       animation: shake 0.5s forwards;
@@ -105,40 +102,41 @@ const Round = ({ endRound, meme }) => {
                       100% { transform: translate(1px, -2px) rotate(-1deg); }
                   }
                 `}</style>
-                <Button
-                  variant={
-                    // If the button has been clicked, show the success or
-                    // danger variant based on whether the caption is correct.
-                    // If a button has been clicked and it was the incorrect
-                    // one, show the success variants for the correct captions.
-                    clickedButton === index
-                      ? isCorrect
-                        ? "success"
-                        : "danger"
-                      : clickedButton !== null &&
-                          caption.isCorrect &&
-                          !isCorrect
-                        ? "success"
-                        : "light"
-                  }
-                  size="lg"
-                  className="w-100"
-                  style={{
-                    fontFamily: "Impact",
-                    textTransform: "uppercase",
-                    fontSize: "2rem",
-                    color: "white",
-                    textShadow:
-                      "-2px -2px 0px black, 2px -2px 0px black, -2px 2px 0px black, 2px 2px 0px black",
-                  }}
-                  onClick={() => handleClick(index, caption.isCorrect)}
-                >
-                  {caption.caption}
-                </Button>
-              </Col>
-            </Row>
-          ))}
-      </Container>
+                  <Button
+                    variant={
+                      // If the button has been clicked, show the success or
+                      // danger variant based on whether the caption is correct.
+                      // If a button has been clicked and it was the incorrect
+                      // one, show the success variants for the correct captions.
+                      clickedButton === index
+                        ? isCorrect
+                          ? "success"
+                          : "danger"
+                        : clickedButton !== null &&
+                            caption.isCorrect &&
+                            !isCorrect
+                          ? "success"
+                          : "light"
+                    }
+                    size="lg"
+                    className="w-100"
+                    style={{
+                      fontFamily: "Impact",
+                      textTransform: "uppercase",
+                      fontSize: "2rem",
+                      color: "white",
+                      textShadow:
+                        "-2px -2px 0px black, 2px -2px 0px black, -2px 2px 0px black, 2px 2px 0px black",
+                    }}
+                    onClick={() => handleClick(index, caption.isCorrect)}
+                  >
+                    {caption.caption}
+                  </Button>
+                </Col>
+              </Row>
+            ))}
+        </Container>
+      </Col>
     </>
   );
 };

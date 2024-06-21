@@ -218,9 +218,12 @@ END;
 
 ## Screenshots
 
-![Screenshot1](./img/screenshot.jpg)
-
-![Screenshot2](./img/screenshot.jpg)
+![play screen](imgs/play-screen.png)
+![correct guess](imgs/correct-guess.png)
+![wrong guess](imgs/wrong-guess.png)
+![end game screen](imgs/end-game-screen.png)
+![profile page with history](imgs/profile-page-history.png)
+![past games recap](imgs/past-games-recap.png)
 
 ## Users Credentials
 
