@@ -1,17 +1,36 @@
 import db from "../db/db.mjs";
 
+/**
+ * Data access object for the Meme table.
+ */
 class MemeDAO {
-  async getMeme(id) {
+  /**
+   * Returns a meme by ID.
+   * @param {number} id - Meme ID
+   * @returns {Promise<Object>} Meme object
+   */
+  static async getMeme(id) {
     return db.prepare("SELECT * FROM Meme WHERE id = ?").get(id);
   }
 
-  async getRandomMemes(count) {
+  /**
+   * Returns a random meme.
+   * @param {number} count - Number of memes to fetch
+   * @returns {Promise<Array>} Array of memes
+   */
+  static async getRandomMemes(count) {
     return db
       .prepare("SELECT * FROM Meme ORDER BY RANDOM() LIMIT ?")
       .all(count);
   }
 
-  async getCorrectCaptions(id, count) {
+  /**
+   * Returns correct captions for a meme.
+   * @param {number} id - Meme ID
+   * @param {number} count - Number of captions to fetch
+   * @returns {Promise<Array>} Array of captions
+   */
+  static async getCorrectCaptions(id, count) {
     return db
       .prepare(
         `
@@ -27,12 +46,18 @@ class MemeDAO {
           RANDOM()
         LIMIT
           ?
-        `,
+        `
       )
       .all(id, count);
   }
 
-  async getIncorrectCaptions(id, count) {
+  /**
+   * Returns incorrect captions for a meme.
+   * @param {number} id - Meme ID
+   * @param {number} count - Number of captions to fetch
+   * @returns {Promise<Array>} Array of captions
+   */
+  static async getIncorrectCaptions(id, count) {
     return db
       .prepare(
         `
@@ -48,7 +73,7 @@ class MemeDAO {
           RANDOM()
         LIMIT
           ?
-        `,
+        `
       )
       .all(id, count);
   }

@@ -1,9 +1,16 @@
 import db from "../db/db.mjs";
 import dayjs from "dayjs";
 
+/**
+ * Data access object for the Game table.
+ */
 class GameDAO {
-  async getGames(idUser) {
-    // TODO: Coalesce the values if needed
+  /**
+   * Returns all games for a user, including corresponding rounds and memes.
+   * @param {number} idUser - User ID
+   * @returns {Promise<Array>} Array of games
+   */
+  static async getGames(idUser) {
     const getGamesAndRounds = db.prepare(`
       SELECT
         *
@@ -41,7 +48,13 @@ class GameDAO {
     return Object.values(games);
   }
 
-  async recordGame(idUser, rounds) {
+  /**
+   * Records a new game.
+   * @param {number} idUser - User ID
+   * @param {Array} rounds - Array of rounds
+   * @returns {Promise<number>} Game ID of the newly recorded game
+   */
+  static async recordGame(idUser, rounds) {
     const insertGame = db.prepare(
       "INSERT INTO Game (idUser, date) VALUES (?, ?)"
     );

@@ -4,6 +4,7 @@ import Authenticator from "./auth.mjs";
 import AuthRoutes from "./routers/auth.mjs";
 import MemeRoutes from "./routers/meme.mjs";
 import GameRoutes from "./routers/game.mjs";
+import ErrorHandler from "./errors/ErrorHandler.mjs";
 
 const PREFIX = "/api";
 
@@ -24,6 +25,8 @@ function initRoutes(app) {
   app.use(`${PREFIX}/sessions`, authRoutes.getRouter());
   app.use(`${PREFIX}/memes`, memeRoutes.getRouter());
   app.use(`${PREFIX}/games`, gameRoutes.getRouter());
+
+  ErrorHandler.register(app);
 }
 
 export default initRoutes;
