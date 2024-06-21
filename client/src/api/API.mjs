@@ -47,14 +47,25 @@ async function getUserInfo() {
 
 /** ---------------------------- Game APIs ---------------------------------- */
 
-async function recordGame(userId, rounds) {
+async function recordGame(idUser, rounds) {
   const response = await fetch(`${SERVER_URL}/games`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     credentials: "include",
-    body: JSON.stringify({ userId, rounds }),
+    body: JSON.stringify({ idUser, rounds }),
+  });
+
+  if (response.ok) return response.json();
+
+  handleErrors(response);
+}
+
+async function getGames(idUser) {
+  const response = await fetch(`${SERVER_URL}/games/${idUser}`, {
+    method: "GET",
+    credentials: "include",
   });
 
   if (response.ok) return response.json();
@@ -115,6 +126,7 @@ const API = {
   logout,
   getUserInfo,
   recordGame,
+  getGames,
   getMeme,
   getRandomMemes,
   getCorrectCaptions,

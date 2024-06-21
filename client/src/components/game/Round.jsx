@@ -26,7 +26,7 @@ const Round = ({ endRound, meme }) => {
         idCaption: index === null ? null : meme.captions[index].id,
         score: isCorrectGuess ? POINTS_CORRECT_GUESS : POINTS_INCORRECT_GUESS,
         tag: meme.tag,
-        caption: meme.captions[index].caption,
+        caption: index === null ? null : meme.captions[index].caption,
       });
     }, 1000);
   };

@@ -6,7 +6,8 @@ import PlayButton from "./components/game/PlayButton";
 import Game from "./components/game/Game";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Profile from "./components/user/Profile";
-import ErrorPage from "./components/ErrorPage";
+import ErrorPage from "./components/errors/Error404Page";
+import ErrorBoundary from "./components/errors/ErrorBoundary";
 
 const NUM_MEMES_LOGGED_IN = 3;
 const NUM_MEMES_NOT_LOGGED_IN = 1;
@@ -126,18 +127,20 @@ const App = () => {
         handleLogout={handleLogout}
         isLoggedIn={isLoggedIn}
       />
-      <Routes>
-        <Route
-          path="/"
-          element={<PlayButton onStartGame={startGame} />}
-        ></Route>
-        <Route
-          path="play"
-          element={<Game memes={memes} endGame={endGame} />}
-        ></Route>
-        <Route path="profile" element={<Profile />}></Route>
-        <Route path="*" element={<ErrorPage />}></Route>
-      </Routes>
+      <ErrorBoundary>
+        <Routes>
+          <Route
+            path="/"
+            element={<PlayButton onStartGame={startGame} />}
+          ></Route>
+          <Route
+            path="play"
+            element={<Game memes={memes} endGame={endGame} />}
+          ></Route>
+          <Route path="profile" element={<Profile user={user} />}></Route>
+          <Route path="*" element={<ErrorPage />}></Route>
+        </Routes>
+      </ErrorBoundary>
     </div>
   );
 };

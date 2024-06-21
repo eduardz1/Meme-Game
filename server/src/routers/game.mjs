@@ -16,14 +16,14 @@ class GameRoutes {
 
   initRoutes() {
     this.router.get(
-      "/:id",
+      "/:idUser",
       this.authenticator.isLoggedIn,
-      param("id").isInt(),
+      param("idUser").isInt(),
       (req, res) => {
         this.dao
-          .getGame(req.params.id)
-          .then((game) => {
-            res.json(game);
+          .getGames(req.params.idUser)
+          .then((games) => {
+            res.json(games);
           })
           .catch((err) => {
             res.status(500).json(err);
@@ -34,7 +34,7 @@ class GameRoutes {
     this.router.post(
       "/",
       this.authenticator.isLoggedIn,
-      body("userId").isInt(),
+      body("idUser").isInt(),
       body("rounds").isArray().isLength({ min: 1, max: 10 }),
       body("rounds.*.idGame").isInt(),
       body("rounds.*.idMeme").isInt(),
@@ -42,7 +42,7 @@ class GameRoutes {
       body("rounds.*.score").isInt(),
       (req, res) => {
         this.dao
-          .saveGame(req.body.userId, req.body.rounds)
+          .recordGame(req.body.idUser, req.body.rounds)
           .then((game) => {
             res.json(game);
           })

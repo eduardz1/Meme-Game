@@ -4,9 +4,8 @@ import Modal from "react-bootstrap/Modal";
 import Image from "react-bootstrap/Image";
 import { useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
+import MemesCard from "../MemeCard";
 
 const NUM_REACTION_IMAGES = 4;
 
@@ -66,51 +65,14 @@ const EndScreen = ({ setConfirmed, rounds }) => {
               className="img-fluid w-100"
             />
             {!!getScore() && (
-              <Card className="mt-3" bg="success" text="light">
+              <Card className="mt-3">
                 <Card.Header className="text-center">
                   <h3>Correctly guessed captions</h3>
                 </Card.Header>
-                <Card.Body className="text-center">
-                  {rounds.map(
-                    (round, index) =>
-                      round.score != 0 && (
-                        <Row
-                          key={index}
-                          className="d-flex align-items-center mt-3"
-                        >
-                          <Col
-                            style={{
-                              position: "relative",
-                              display: "inline-flex",
-                            }}
-                          >
-                            <Image
-                              src={`memes/${round.tag}`}
-                              alt={round.tag.split(".")[0].replace(/-/g, " ")}
-                              rounded
-                              className="img-fluid w-100"
-                            />
-                            <div
-                              style={{
-                                position: "absolute",
-                                bottom: 0,
-                                padding: "10px 10px 10px 10px",
-                                fontFamily: "Impact",
-                                textTransform: "uppercase",
-                                fontSize: "1.5rem",
-                                color: "white",
-                                textAlign: "center",
-                                width: "95%",
-                                textShadow:
-                                  "-2px -2px 0px black, 2px -2px 0px black, -2px 2px 0px black, 2px 2px 0px black",
-                              }}
-                            >
-                              {round.caption || <i>No caption selected</i>}
-                            </div>
-                          </Col>
-                        </Row>
-                      )
-                  )}
+                <Card.Body>
+                  <MemesCard
+                    rounds={rounds.filter((round) => round.score !== 0)}
+                  />
                 </Card.Body>
               </Card>
             )}
