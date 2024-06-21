@@ -12,7 +12,7 @@ class UserDAO {
    * @param {string} password - User password
    * @return {Promise<Object>} User object
    */
-  static async getUser(email, password) {
+  static getUser(email, password) {
     return new Promise((resolve, reject) => {
       const sql = "SELECT * FROM User WHERE email = ?";
 
@@ -44,7 +44,7 @@ class UserDAO {
    * @param {number} idUser - User ID
    * @returns {number} Total score
    */
-  static async getTotalScore(idUser) {
+  static getTotalScore(idUser) {
     return db.prepare("SELECT totalScore FROM User WHERE id = ?").get(idUser)
       .totalScore;
   }

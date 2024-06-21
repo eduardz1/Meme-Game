@@ -22,7 +22,6 @@ class ErrorHandler {
 
   /**
    * Registers the error handler
-   *
    * @param {Object} app - Express application
    */
   static register(app) {

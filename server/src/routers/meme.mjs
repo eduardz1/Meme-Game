@@ -32,12 +32,16 @@ class MemeRoutes {
      */
     this.router.get(
       "/random",
-      query("count").isInt({ min: 1, max: 10 }).toInt(),
+      query("count").isInt({ gt: 0 }),
       this.errorHandler.validate,
-      async (req, res, next) =>
-        MemeDao.getRandomMemes(req.query.count)
-          .then((memes) => res.json(memes))
-          .catch((err) => next(err))
+      async (req, res, next) => {
+        try {
+          const memes = MemeDao.getRandomMemes(req.query.count);
+          res.json(memes);
+        } catch (err) {
+          next(err);
+        }
+      }
     );
 
     /**
@@ -50,10 +54,14 @@ class MemeRoutes {
       "/:id",
       param("id").isInt(),
       this.errorHandler.validate,
-      async (req, res, next) =>
-        MemeDao.getMeme(req.params.id)
-          .then((meme) => res.json(meme))
-          .catch((err) => next(err))
+      async (req, res, next) => {
+        try {
+          const meme = MemeDao.getMeme(req.params.id);
+          res.json(meme);
+        } catch (err) {
+          next(err);
+        }
+      }
     );
 
     /**
@@ -66,12 +74,19 @@ class MemeRoutes {
     this.router.get(
       "/:id/captions/correct",
       param("id").isInt(),
-      query("count").isInt({ min: 1, max: 10 }).toInt(),
+      query("count").isInt({ gt: 0 }),
       this.errorHandler.validate,
-      async (req, res, next) =>
-        MemeDao.getCorrectCaptions(req.params.id, req.query.count)
-          .then((captions) => res.json(captions))
-          .catch((err) => next(err))
+      async (req, res, next) => {
+        try {
+          const captions = MemeDao.getCorrectCaptions(
+            req.params.id,
+            req.query.count
+          );
+          res.json(captions);
+        } catch (err) {
+          next(err);
+        }
+      }
     );
 
     /**
@@ -84,12 +99,19 @@ class MemeRoutes {
     this.router.get(
       "/:id/captions/incorrect",
       param("id").isInt(),
-      query("count").isInt({ min: 1, max: 10 }).toInt(),
+      query("count").isInt({ gt: 0 }),
       this.errorHandler.validate,
-      async (req, res, next) =>
-        MemeDao.getIncorrectCaptions(req.params.id, req.query.count)
-          .then((captions) => res.json(captions))
-          .catch((err) => next(err))
+      async (req, res, next) => {
+        try {
+          const captions = MemeDao.getIncorrectCaptions(
+            req.params.id,
+            req.query.count
+          );
+          res.json(captions);
+        } catch (err) {
+          next(err);
+        }
+      }
     );
   }
 }

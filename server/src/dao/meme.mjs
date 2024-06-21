@@ -9,7 +9,7 @@ class MemeDAO {
    * @param {number} id - Meme ID
    * @returns {Promise<Object>} Meme object
    */
-  static async getMeme(id) {
+  static getMeme(id) {
     return db.prepare("SELECT * FROM Meme WHERE id = ?").get(id);
   }
 
@@ -18,7 +18,7 @@ class MemeDAO {
    * @param {number} count - Number of memes to fetch
    * @returns {Promise<Array>} Array of memes
    */
-  static async getRandomMemes(count) {
+  static getRandomMemes(count) {
     return db
       .prepare("SELECT * FROM Meme ORDER BY RANDOM() LIMIT ?")
       .all(count);
@@ -30,7 +30,7 @@ class MemeDAO {
    * @param {number} count - Number of captions to fetch
    * @returns {Promise<Array>} Array of captions
    */
-  static async getCorrectCaptions(id, count) {
+  static getCorrectCaptions(id, count) {
     return db
       .prepare(
         `
@@ -57,7 +57,7 @@ class MemeDAO {
    * @param {number} count - Number of captions to fetch
    * @returns {Promise<Array>} Array of captions
    */
-  static async getIncorrectCaptions(id, count) {
+  static getIncorrectCaptions(id, count) {
     return db
       .prepare(
         `

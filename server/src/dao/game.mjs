@@ -10,7 +10,7 @@ class GameDAO {
    * @param {number} idUser - User ID
    * @returns {Promise<Array>} Array of games
    */
-  static async getGames(idUser) {
+  static getGames(idUser) {
     const getGamesAndRounds = db.prepare(`
       SELECT
         *
@@ -54,7 +54,7 @@ class GameDAO {
    * @param {Array} rounds - Array of rounds
    * @returns {Promise<number>} Game ID of the newly recorded game
    */
-  static async recordGame(idUser, rounds) {
+  static recordGame(idUser, rounds) {
     const insertGame = db.prepare(
       "INSERT INTO Game (idUser, date) VALUES (?, ?)"
     );

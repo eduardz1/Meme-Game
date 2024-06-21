@@ -66,9 +66,9 @@ class AuthRoutes {
    * @param {express.Response} res - Express response
    * @param {Function} next - The next function
    */
-  async updateUserTotalScore(req, res, next) {
+  updateUserTotalScore(req, res, next) {
     try {
-      const totalScore = await UserDAO.getTotalScore(req.user.id);
+      const totalScore = UserDAO.getTotalScore(req.user.id);
       req.user.totalScore = totalScore;
       next();
     } catch (error) {

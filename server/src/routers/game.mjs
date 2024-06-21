@@ -1,7 +1,7 @@
 import express from "express";
 import ErrorHandler from "../errors/ErrorHandler.mjs";
 import GameDao from "../dao/game.mjs";
-import { body, param } from "express-validator";
+import { body } from "express-validator";
 
 /**
  * Class representing the game routes
@@ -27,32 +27,23 @@ class GameRoutes {
   initRoutes() {
     /**
      * Fetches all games for a user
-     * @route GET /api/games/:idUser
-     * @param {number} idUser.path.required - User ID
+     * @route GET /api/games/
      * @returns {Array.<Object>} 200 - Array of games
      */
-    this.router.get(
-      "/:idUser",
-      this.authenticator.isLoggedIn,
-      param("idUser").isInt(),
-      this.errorHandler.validate,
-      (req, res, next) => {
-        GameDao.getGames(req.params.idUser)
-          .then((games) => {
-            res.json(games);
-          })
-          .catch((err) => {
-            next(err);
-          });
+    this.router.get("/", this.authenticator.isLoggedIn, (req, res, next) => {
+      try {
+        const games = GameDao.getGames(req.user.id);
+        res.json(games);
+      } catch (err) {
+        next(err);
       }
-    );
+    });
 
     /**
      * Records a new game
      * @route POST /api/games
      * @body {number} idUser - User ID
      * @body {Array} rounds - Array of rounds
-     * @body {number} rounds.*.idGame - Game ID
      * @body {number} rounds.*.idMeme - Meme ID
      * @body {number} rounds.*.idCaption - Caption ID
      * @body {number} rounds.*.score - Score
@@ -61,21 +52,18 @@ class GameRoutes {
     this.router.post(
       "/",
       this.authenticator.isLoggedIn,
-      body("idUser").isInt(),
-      body("rounds").isArray().isLength({ min: 1, max: 10 }),
-      body("rounds.*.idGame").isInt(),
+      body("rounds").isArray().isLength({ gt: 0 }),
       body("rounds.*.idMeme").isInt(),
       body("rounds.*.idCaption").isInt(),
       body("rounds.*.score").isInt(),
       this.errorHandler.validate,
       (req, res, next) => {
-        GameDao.recordGame(req.body.idUser, req.body.rounds)
-          .then((game) => {
-            res.json(game);
-          })
-          .catch((err) => {
-            next(err);
-          });
+        try {
+          const game = GameDao.recordGame(req.user.id, req.body.rounds);
+          res.json(game);
+        } catch (err) {
+          next(err);
+        }
       }
     );
   }
