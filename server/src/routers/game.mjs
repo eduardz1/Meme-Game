@@ -33,8 +33,9 @@ class GameRoutes {
     this.router.get(
       "/",
       this.authenticator.isLoggedIn,
-      query("limit").optional().isInt({ gt: 0 }),
-      query("offset").optional().isInt({ min: 0 }),
+      query("limit").optional({ values: "falsy" }).isInt(),
+      query("offset").optional({ values: "null" }).isInt({ min: 0 }),
+      this.errorHandler.validate,
       (req, res, next) => {
         try {
           const games = GameDao.getGames(
@@ -64,7 +65,7 @@ class GameRoutes {
       this.authenticator.isLoggedIn,
       body("rounds").isArray().isLength({ gt: 0 }),
       body("rounds.*.idMeme").isInt(),
-      body("rounds.*.idCaption").optional({values: "null"}).isInt(),
+      body("rounds.*.idCaption").optional({ values: "null" }).isInt(),
       body("rounds.*.score").isInt(),
       this.errorHandler.validate,
       (req, res, next) => {

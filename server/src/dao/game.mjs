@@ -42,8 +42,6 @@ class GameDAO {
         LEFT JOIN Meme ON Round.idMeme = Meme.id
         LEFT JOIN Caption ON Round.idCaption = Caption.id`;
 
-    console.log(sql);
-
     const getGamesAndRounds = db.prepare(sql);
 
     const rows = getGamesAndRounds.all(idUser);

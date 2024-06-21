@@ -24,7 +24,7 @@ async function login(email, password) {
 }
 
 async function logout() {
-  const response = await fetch(`${SERVER_URL}/sessions`, {
+  const response = await fetch(`${SERVER_URL}/sessions/current`, {
     method: "DELETE",
     credentials: "include",
   });

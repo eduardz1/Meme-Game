@@ -3,13 +3,8 @@ import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 
 import PropTypes from "prop-types";
-import { useEffect } from "react";
 
 const Profile = ({ user }) => {
-  useEffect(() => {
-    console.log(user);
-  }, []);
-
   return (
     <Container>
       <Card className="mt-3">

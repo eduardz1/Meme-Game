@@ -82,7 +82,7 @@ class Authenticator {
    * @param {Object} res - Express response
    */
   logout(req, res) {
-    req.logout(() => res.end());
+    req.logout(() => res.status(204).end());
     res.json({ message: "Logged out" });
   }
 

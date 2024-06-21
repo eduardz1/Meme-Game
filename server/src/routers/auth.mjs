@@ -42,9 +42,9 @@ class AuthRoutes {
 
     /**
      * Logs out the user
-     * @route DELETE /api/sessions
+     * @route DELETE /api/sessions/current
      */
-    this.router.delete("/", this.authenticator.logout);
+    this.router.delete("/current", this.authenticator.logout);
 
     /**
      * Fetches the current logged-in user
