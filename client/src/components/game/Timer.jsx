@@ -38,7 +38,7 @@ const Timer = ({ handleClick }) => {
     const id = setInterval(() => {
       const seconds = getTimeRemaining(e);
       if (seconds <= 0) {
-        handleClick(null, false);
+        handleClick(null);
         clearInterval(Ref.current);
       }
 

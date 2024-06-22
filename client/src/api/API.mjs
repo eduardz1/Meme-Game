@@ -112,9 +112,11 @@ async function getRandomMemes(count) {
   handleErrors(await response.json());
 }
 
-async function getCorrectCaptions(id, count) {
+/** -------------------------- Caption APIs --------------------------------- */
+
+async function getRandomCaptionsForMeme(idMeme) {
   const response = await fetch(
-    `${SERVER_URL}/memes/${id}/captions/correct?count=${count}`,
+    `${SERVER_URL}/captions/random?idMeme=${idMeme}`,
     {
       method: "GET",
       headers: {
@@ -128,16 +130,13 @@ async function getCorrectCaptions(id, count) {
   handleErrors(await response.json());
 }
 
-async function getIncorrectCaptions(id, count) {
-  const response = await fetch(
-    `${SERVER_URL}/memes/${id}/captions/incorrect?count=${count}`,
-    {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-      },
-    }
-  );
+async function validateCaption(id, idMeme) {
+  const response = await fetch(`${SERVER_URL}/captions/${id}/${idMeme}`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+    },
+  });
 
   if (response.ok) return response.json();
 
@@ -151,8 +150,8 @@ const API = {
   recordGame,
   getGames,
   getRandomMemes,
-  getCorrectCaptions,
-  getIncorrectCaptions,
+  getRandomCaptionsForMeme,
+  validateCaption,
 };
 
 export default API;

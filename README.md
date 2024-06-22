@@ -62,16 +62,14 @@
   - response body content: `{ id: number, tag: string }`
   - response status code: 200
   - possible errors: 500 (Internal Server Error)
-- GET `/api/memes/:id/captions/correct?count=`: get the correct caption of a meme
-  - request query parameters: `count` (number of captions to retrieve)
-  - request parameters: `id` (meme id)
-  - response body content: `{ id: number, caption: string }`
+- GET `/api/captions/random?idMeme=`: get a random set of captions for a given meme
+  - request query parameters: `idMeme` (meme id)
+  - response body content: `[{ id: number, caption: string }]`
   - response status code: 200
   - possible errors: 500 (Internal Server Error)
-- GET `/api/memes/:id/captions/incorrect?count=`: get the incorrect captions of a meme
-  - request query parameters: `count` (number of captions to retrieve)
-  - request parameters: `id` (meme id)
-  - response body content: `[ { id: number, caption: string } ]`
+- GET `/api/captions/:id/:idMeme`: responds whether or not the caption is correct
+  - request parameters: `idMeme` (meme id), `id` (caption id)
+  - response body content: `true | false`
   - response status code: 200
   - possible errors: 500 (Internal Server Error)
 

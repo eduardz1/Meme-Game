@@ -7,7 +7,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import API from "../../api/API.mjs";
 import MemesCard from "../MemeCard";
-import MessageContext from "../contexts/MessageContext.mjs";
+import MessageContext from "../contexts/MessageContext.jsx";
 
 const GAMES_PER_PAGE = 5;
 

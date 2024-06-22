@@ -9,34 +9,19 @@ import Profile from "./components/user/Profile";
 import ErrorPage from "./components/errors/Error404Page";
 import ErrorBoundary from "./components/errors/ErrorBoundary";
 import ProtectedRoute from "./components/errors/ProtectedRoute";
-import MessageContext from "./components/contexts/MessageContext.mjs";
+import MessageContext from "./components/contexts/MessageContext.jsx";
+import useMessageContext from "./components/contexts/useMessageContext.mjs";
 import MessageToast from "./components/MessageToast";
 
 const NUM_MEMES_LOGGED_IN = 3;
 const NUM_MEMES_NOT_LOGGED_IN = 1;
-const NUM_CORRECT_CAPTIONS = 2;
-const NUM_INCORRECT_CAPTIONS = 5;
 
 const App = () => {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [memes, setMemes] = useState([]);
   const [user, setUser] = useState(null);
-  const [message, setMessage] = useState({ msg: "", type: "" });
-
-  const setError = (err) => {
-    const message = err.message || "Unknown Error";
-
-    // Assuming only one error message at a time
-    setMessage({ msg: message, type: "error" });
-  };
-
-  const setInfo = (msg) => {
-    setMessage({ msg: msg, type: "info" });
-  };
-
-  const setWarning = (msg) => {
-    setMessage({ msg: msg, type: "warning" });
-  };
+  const { message, setError, setInfo, setWarning, setMessage } =
+    useMessageContext();
 
   const navigate = useNavigate();
 
@@ -70,32 +55,16 @@ const App = () => {
 
       const updatedMemes = await Promise.all(
         memes.map(async (meme) => {
-          const correctCaptions = await API.getCorrectCaptions(
-            meme.id,
-            NUM_CORRECT_CAPTIONS
-          );
+          const captions = await API.getRandomCaptionsForMeme(meme.id);
 
-          const updatedCorrectCaptions = correctCaptions.map((caption) => ({
-            ...caption,
-            isCorrect: true,
-          }));
-
-          const incorrectCaptions = await API.getIncorrectCaptions(
-            meme.id,
-            NUM_INCORRECT_CAPTIONS
-          );
-
-          const updatedIncorrectCaptions = incorrectCaptions.map((caption) => ({
+          const updatedCaptions = captions.map((caption) => ({
             ...caption,
             isCorrect: false,
           }));
 
           return {
             ...meme,
-            captions: [
-              ...updatedCorrectCaptions,
-              ...updatedIncorrectCaptions,
-            ].sort(() => Math.random() - 0.5),
+            captions: [...updatedCaptions],
           };
         })
       );
@@ -148,12 +117,8 @@ const App = () => {
           fetchUserInfo={fetchUserInfo}
           isLoggedIn={isLoggedIn}
         />
-
         <Routes>
-          <Route
-            path="/"
-            element={<PlayButton onStartGame={startGame} />}
-          ></Route>
+          <Route index element={<PlayButton onStartGame={startGame} />}></Route>
           <Route
             path="play"
             element={<Game memes={memes} endGame={endGame} />}

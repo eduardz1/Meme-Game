@@ -26,7 +26,7 @@ class AuthRoutes {
    */
   initRoutes() {
     /**
-     * Creates a new user
+     * Authenticates the user
      * @route POST /api/sessions
      * @body {string} email - User email
      * @body {string} password - User password
