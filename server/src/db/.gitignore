@@ -1,0 +1,3 @@
+# Temporary shared memory and checkpoint files
+*.sqlite-shm
+*.sqlite-wal
