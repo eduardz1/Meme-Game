@@ -22,7 +22,7 @@ const PlayButton = ({ onStartGame }) => {
           }
         }
 
-        .btn-play-button {
+        .btn-light {
           padding: 1rem 5rem;
           font-size: 5rem;
           letter-spacing: 0.2rem;
@@ -32,20 +32,20 @@ const PlayButton = ({ onStartGame }) => {
           transition: all 0.3s ease;
         }
 
-        .btn-play-button:active {
+        .btn-light:active {
           transform: scale(0.9);
           box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
           outline: none;
           border: none;
         }
 
-        .btn-play-button:focus {
+        .btn-light:focus {
           outline: none;
           border: none;
         }
       `}</style>
 
-      <Button variant="play-button" onClick={onStartGame}>
+      <Button variant="light" onClick={onStartGame}>
         PLAY
       </Button>
     </div>

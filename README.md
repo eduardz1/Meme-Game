@@ -218,6 +218,7 @@ END;
 
 ## Screenshots
 
+![home page](imgs/home-page.png)
 ![play screen](imgs/play-screen.png)
 ![correct guess](imgs/correct-guess.png)
 ![wrong guess](imgs/wrong-guess.png)
