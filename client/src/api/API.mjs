@@ -1,9 +1,19 @@
 const SERVER_URL = "http://localhost:3001/api";
 
 function handleErrors(response) {
-  if (response.error) throw Error(response.error);
-  if (response.message) throw Error(response.message);
-  throw Error("Something went wrong");
+  let errorMessage = "";
+
+  if (response.error) errorMessage += `${response.error}`;
+  if (response.message) errorMessage += `${response.message}`;
+  if (response.statusText) errorMessage += `${response.statusText}`;
+  if (response.errors && Array.isArray(response.errors)) {
+    const errorDetails = response.errors
+      .map((err) => `${err.msg} (Field: ${err.path}, Value: ${err.value})`)
+      .join(",");
+    errorMessage += ` | Errors: ${errorDetails}`;
+  }
+
+  throw Error(errorMessage || "Something went wrong");
 }
 
 /** --------------------------- Access APIs --------------------------------- */
@@ -13,6 +23,7 @@ async function login(email, password) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Accept: "application/json",
     },
     credentials: "include",
     body: JSON.stringify({ email, password }),
@@ -20,7 +31,7 @@ async function login(email, password) {
 
   if (response.ok) return response.json();
 
-  handleErrors(response);
+  handleErrors(await response.json());
 }
 
 async function logout() {
@@ -29,20 +40,23 @@ async function logout() {
     credentials: "include",
   });
 
-  if (response.ok) return response.json();
+  if (response.ok) return response;
 
-  handleErrors(response);
+  handleErrors(await response.json());
 }
 
 async function getUserInfo() {
   const response = await fetch(`${SERVER_URL}/sessions/current`, {
     method: "GET",
+    headers: {
+      Accept: "application/json",
+    },
     credentials: "include",
   });
 
   if (response.ok) return response.json();
 
-  handleErrors(response);
+  handleErrors(await response.json());
 }
 
 /** ---------------------------- Game APIs ---------------------------------- */
@@ -52,6 +66,7 @@ async function recordGame(rounds) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Accept: "application/json",
     },
     credentials: "include",
     body: JSON.stringify({ rounds }),
@@ -59,7 +74,7 @@ async function recordGame(rounds) {
 
   if (response.ok) return response.json();
 
-  handleErrors(response);
+  handleErrors(await response.json());
 }
 
 async function getGames({ limit, offset }) {
@@ -70,13 +85,16 @@ async function getGames({ limit, offset }) {
     })}`,
     {
       method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
       credentials: "include",
     }
   );
 
   if (response.ok) return response.json();
 
-  handleErrors(response);
+  handleErrors(await response.json());
 }
 
 /** ---------------------------- Meme APIs ---------------------------------- */
@@ -84,11 +102,14 @@ async function getGames({ limit, offset }) {
 async function getRandomMemes(count) {
   const response = await fetch(`${SERVER_URL}/memes/random?count=${count}`, {
     method: "GET",
+    headers: {
+      Accept: "application/json",
+    },
   });
 
   if (response.ok) return response.json();
 
-  handleErrors(response);
+  handleErrors(await response.json());
 }
 
 async function getCorrectCaptions(id, count) {
@@ -96,12 +117,15 @@ async function getCorrectCaptions(id, count) {
     `${SERVER_URL}/memes/${id}/captions/correct?count=${count}`,
     {
       method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
     }
   );
 
   if (response.ok) return response.json();
 
-  handleErrors(response);
+  handleErrors(await response.json());
 }
 
 async function getIncorrectCaptions(id, count) {
@@ -109,12 +133,15 @@ async function getIncorrectCaptions(id, count) {
     `${SERVER_URL}/memes/${id}/captions/incorrect?count=${count}`,
     {
       method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
     }
   );
 
   if (response.ok) return response.json();
 
-  handleErrors(response);
+  handleErrors(await response.json());
 }
 
 const API = {

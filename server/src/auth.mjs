@@ -26,9 +26,6 @@ class Authenticator {
 
     this.app.use(passport.authenticate("session"));
 
-    this.app.use(passport.initialize());
-    this.app.use(passport.session());
-
     passport.use(
       new LocalStrategy(
         {
@@ -36,17 +33,17 @@ class Authenticator {
           passwordField: "password",
         },
         (email, password, done) => {
-          UserDao.getUser(email, password)
-            .then((user) => {
-              if (!user) {
-                return done(null, false, {
-                  message: "Invalid email and/or password",
-                });
-              }
+          try {
+            const user = UserDao.getUser(email, password);
+            if (!user)
+              return done(null, false, {
+                error: "Invalid email and/or password",
+              });
 
-              return done(null, user);
-            })
-            .catch((err) => done(err));
+            return done(null, user);
+          } catch (err) {
+            return done(err);
+          }
         }
       )
     );
@@ -83,7 +80,6 @@ class Authenticator {
    */
   logout(req, res) {
     req.logout(() => res.status(204).end());
-    res.json({ message: "Logged out" });
   }
 
   /**
@@ -95,7 +91,7 @@ class Authenticator {
    */
   isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) return next();
-    return res.status(401).json({ message: "Unauthorized" });
+    return res.status(401).json({ error: "Unauthorized" });
   }
 }
 

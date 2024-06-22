@@ -1,35 +1,33 @@
-import API from "../../api/API.mjs";
-import { useState, useEffect, useContext } from "react";
+import dayjs from "dayjs";
+import { useContext, useState } from "react";
 import Accordion from "react-bootstrap/Accordion";
-import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import API from "../../api/API.mjs";
 import MemesCard from "../MemeCard";
 import MessageContext from "../contexts/MessageContext.mjs";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import dayjs from "dayjs";
 
 const GAMES_PER_PAGE = 5;
 
 const GameHistory = () => {
-  const { setInfo, setError } = useContext(MessageContext);
+  const { setError } = useContext(MessageContext);
   const [loadedGames, setLoadedGames] = useState(0);
   const [hasMoreGames, setHasMoreGames] = useState(true);
   const [games, setGames] = useState([]);
 
   const loadMoreGames = async () => {
     try {
-      let games = await API.getGames({
+      const games = await API.getGames({
         limit: GAMES_PER_PAGE,
         offset: loadedGames,
       });
 
-      games.reverse();
-
       setLoadedGames(loadedGames + games.length);
-      if (games.length < GAMES_PER_PAGE) {
-        setHasMoreGames(false);
-      }
+
+      if (games.length < GAMES_PER_PAGE) setHasMoreGames(false);
+
       setGames((prevGames) => [...prevGames, ...games]);
     } catch (error) {
       setError(error);

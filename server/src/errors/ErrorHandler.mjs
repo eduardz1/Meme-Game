@@ -15,7 +15,7 @@ class ErrorHandler {
     if (!errors.isEmpty()) {
       return res
         .status(422)
-        .json({ errors: errors.array(), message: "Unprocessable Content" });
+        .json({ errors: errors.array(), error: "Unprocessable Content" });
     }
     next();
   }
@@ -28,7 +28,7 @@ class ErrorHandler {
     // eslint-disable-next-line no-unused-vars
     app.use((err, _req, res, _next) =>
       res.status(err.customCode || 503).json({
-        message: err.customMessage || "Internal Server Error",
+        error: err.customMessage || "Internal Server Error",
       })
     );
   }

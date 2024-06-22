@@ -7,7 +7,7 @@ class MemeDAO {
   /**
    * Returns a random meme.
    * @param {number} count - Number of memes to fetch
-   * @returns {Promise<Array>} Array of memes
+   * @returns {Object[]} Array of memes
    */
   static getRandomMemes(count) {
     return db
@@ -19,24 +19,24 @@ class MemeDAO {
    * Returns correct captions for a meme.
    * @param {number} id - Meme ID
    * @param {number} count - Number of captions to fetch
-   * @returns {Promise<Array>} Array of captions
+   * @returns {Object[]} Array of captions
    */
   static getCorrectCaptions(id, count) {
     return db
       .prepare(
         `
         SELECT
-          Caption.id AS id,
-          caption
+            Caption.id AS id,
+            caption
         FROM
-          CorrectCaption
-          JOIN Caption ON CorrectCaption.idCaption = Caption.id
+            CorrectCaption
+            JOIN Caption ON CorrectCaption.idCaption = Caption.id
         WHERE
-          idMeme = ?
+           idMeme = ?
         ORDER BY
-          RANDOM()
+            RANDOM()
         LIMIT
-          ?
+            ?
         `
       )
       .all(id, count);
@@ -46,24 +46,24 @@ class MemeDAO {
    * Returns incorrect captions for a meme.
    * @param {number} id - Meme ID
    * @param {number} count - Number of captions to fetch
-   * @returns {Promise<Array>} Array of captions
+   * @returns {Object[]} Array of captions
    */
   static getIncorrectCaptions(id, count) {
     return db
       .prepare(
         `
         SELECT
-          Caption.id AS id,
-          caption
+            Caption.id AS id,
+            caption
         FROM
-          CorrectCaption
-          JOIN Caption ON CorrectCaption.idCaption = Caption.id
+            CorrectCaption
+            JOIN Caption ON CorrectCaption.idCaption = Caption.id
         WHERE
-          idMeme <> ?
+           idMeme <> ?
         ORDER BY
-          RANDOM()
+            RANDOM()
         LIMIT
-          ?
+            ?
         `
       )
       .all(id, count);

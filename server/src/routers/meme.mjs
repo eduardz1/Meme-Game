@@ -28,7 +28,7 @@ class MemeRoutes {
      * Fetches a random meme
      * @route GET /api/memes/random
      * @query {number} count.query.required - Number of memes to fetch
-     * @returns {Array.<Object>} 200 - Array of memes
+     * @returns {Object[]} 200 - Array of memes
      */
     this.router.get(
       "/random",
@@ -49,7 +49,7 @@ class MemeRoutes {
      * @route GET /api/memes/{id}/captions/correct
      * @param {number} id.path.required - Meme ID
      * @query {number} count.query.required - Number of captions to fetch
-     * @returns {Array.<Object>} 200 - Array of captions
+     * @returns {Object[]} 200 - Array of captions
      */
     this.router.get(
       "/:id/captions/correct",
@@ -74,7 +74,7 @@ class MemeRoutes {
      * @route GET /api/memes/{id}/captions/incorrect
      * @param {number} id.path.required - Meme ID
      * @query {number} count.query.required - Number of captions to fetch
-     * @returns {Array.<Object>} 200 - Array of captions
+     * @returns {Object[]} 200 - Array of captions
      */
     this.router.get(
       "/:id/captions/incorrect",

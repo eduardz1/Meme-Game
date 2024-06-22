@@ -34,14 +34,18 @@ const App = () => {
     setMessage({ msg: msg, type: "info" });
   };
 
+  const setWarning = (msg) => {
+    setMessage({ msg: msg, type: "warning" });
+  };
+
   const navigate = useNavigate();
 
   const handleLogin = async (email, password) => {
     try {
       const user = await API.login(email, password);
       setLoggedIn(true);
-      setInfo(`Welcome, ${user.name}!`);
       setUser(user);
+      setInfo(`Welcome, ${user.name}!`);
     } catch (error) {
       setError(error);
     }
@@ -61,14 +65,14 @@ const App = () => {
   const startGame = async () => {
     try {
       let memes = await API.getRandomMemes(
-        isLoggedIn ? NUM_MEMES_LOGGED_IN : NUM_MEMES_NOT_LOGGED_IN,
+        isLoggedIn ? NUM_MEMES_LOGGED_IN : NUM_MEMES_NOT_LOGGED_IN
       );
 
       const updatedMemes = await Promise.all(
         memes.map(async (meme) => {
           const correctCaptions = await API.getCorrectCaptions(
             meme.id,
-            NUM_CORRECT_CAPTIONS,
+            NUM_CORRECT_CAPTIONS
           );
 
           const updatedCorrectCaptions = correctCaptions.map((caption) => ({
@@ -78,7 +82,7 @@ const App = () => {
 
           const incorrectCaptions = await API.getIncorrectCaptions(
             meme.id,
-            NUM_INCORRECT_CAPTIONS,
+            NUM_INCORRECT_CAPTIONS
           );
 
           const updatedIncorrectCaptions = incorrectCaptions.map((caption) => ({
@@ -93,7 +97,7 @@ const App = () => {
               ...updatedIncorrectCaptions,
             ].sort(() => Math.random() - 0.5),
           };
-        }),
+        })
       );
 
       setMemes(updatedMemes);
@@ -120,6 +124,7 @@ const App = () => {
   const fetchUserInfo = async () => {
     try {
       const user = await API.getUserInfo();
+
       setLoggedIn(true);
       setUser(user);
     } catch (error) {
@@ -136,7 +141,7 @@ const App = () => {
 
   return (
     <ErrorBoundary>
-      <MessageContext.Provider value={{ setInfo, setError }}>
+      <MessageContext.Provider value={{ setInfo, setError, setWarning }}>
         <CustomNavbar
           handleLogin={handleLogin}
           handleLogout={handleLogout}

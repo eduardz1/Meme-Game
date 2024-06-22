@@ -1,4 +1,0 @@
-{
-  "*.mjs": "eslint --fix",
-  "*.--write": "prettier --write"
-}

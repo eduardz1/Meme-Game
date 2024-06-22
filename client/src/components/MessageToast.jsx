@@ -7,15 +7,16 @@ const MessageToast = ({ message, setMessage }) => {
     <ToastContainer className="p-3" position="top-center">
       <Toast
         show={message.msg !== ""}
-        autohide
+        autohide={message.type !== "error"}
         onClose={() => setMessage({ msg: "", type: "" })}
         delay={1000}
-        bg={message.type === "error" ? "danger" : "light"}
+        // I prefer having them labeled as "error" instead of danger throughout the app
+        bg={message.type === "error" ? "danger" : message.type}
       >
         {message.type === "error" && (
-          <strong className="me-auto">
-            <Toast.Header>{message.type}</Toast.Header>
-          </strong>
+          <Toast.Header>
+            <strong className="me-auto"> Error </strong>{" "}
+          </Toast.Header>
         )}
         <Toast.Body className={message.type === "error" && "text-white"}>
           {message.msg}

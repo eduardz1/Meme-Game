@@ -66,6 +66,10 @@ const Timer = ({ handleClick }) => {
 
   useEffect(() => {
     startTimer(getTimerEnd());
+
+    return () => {
+      if (Ref.current) clearInterval(Ref.current);
+    };
   }, []);
 
   return (

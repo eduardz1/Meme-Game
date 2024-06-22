@@ -72,7 +72,7 @@ class AuthRoutes {
       req.user.totalScore = totalScore;
       next();
     } catch (error) {
-      res.status(500).json({ message: "Failed to fetch latest score" });
+      res.status(500).json({ error: "Failed to fetch latest score" });
     }
   }
 }

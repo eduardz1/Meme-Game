@@ -13,7 +13,7 @@ const POINTS_CORRECT_GUESS = 5;
 const POINTS_INCORRECT_GUESS = 0;
 
 const Round = ({ endRound, meme }) => {
-  const { setInfo, setError } = useContext(MessageContext);
+  const { setInfo, setWarning } = useContext(MessageContext);
 
   const [clickedButton, setClickedButton] = useState(null);
   const [isCorrect, setIsCorrect] = useState(null);
@@ -24,9 +24,11 @@ const Round = ({ endRound, meme }) => {
   const handleClick = (index, isCorrectGuess) => {
     setClickedButton(index);
     setIsCorrect(isCorrectGuess);
-    setInfo(
-      isCorrectGuess ? "Correct!" : index === null ? "Time's up!" : "Incorrect!"
-    );
+    isCorrectGuess
+      ? setInfo("Correct! 😃")
+      : index === null
+        ? setWarning("Time's up! ⏰")
+        : setWarning("Incorrect! 😖");
     setTimeout(() => {
       endRound({
         idMeme: meme.id,
