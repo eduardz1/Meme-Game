@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import { useState } from "react";
 import PropTypes from "prop-types";
+import React from "react";
 
 const LoginForm = ({ handleLogin }) => {
   const [email, setEmail] = useState("");

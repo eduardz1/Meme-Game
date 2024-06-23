@@ -1,6 +1,7 @@
 import GameHistory from "./GameHistory";
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
+import React from "react";
 
 import PropTypes from "prop-types";
 

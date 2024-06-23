@@ -89,7 +89,7 @@ async function getGames({ limit, offset }) {
         Accept: "application/json",
       },
       credentials: "include",
-    }
+    },
   );
 
   if (response.ok) return response.json();
@@ -122,7 +122,7 @@ async function getRandomCaptionsForMeme(idMeme) {
       headers: {
         Accept: "application/json",
       },
-    }
+    },
   );
 
   if (response.ok) return response.json();

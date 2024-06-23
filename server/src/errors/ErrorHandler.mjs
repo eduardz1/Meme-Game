@@ -29,7 +29,7 @@ class ErrorHandler {
     app.use((err, _req, res, _next) =>
       res.status(err.customCode || 503).json({
         error: err.customMessage || "Internal Server Error",
-      })
+      }),
     );
   }
 }

@@ -6,10 +6,9 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import API from "../../api/API.mjs";
+import React from "react";
 import MemesCard from "../MemeCard";
 import MessageContext from "../contexts/MessageContext.jsx";
-
-const GAMES_PER_PAGE = 5;
 
 const GameHistory = () => {
   const { setError } = useContext(MessageContext);
@@ -20,13 +19,14 @@ const GameHistory = () => {
   const loadMoreGames = async () => {
     try {
       const games = await API.getGames({
-        limit: GAMES_PER_PAGE,
+        limit: parseInt(import.meta.env.VITE_GAMES_PER_PAGE),
         offset: loadedGames,
       });
 
       setLoadedGames(loadedGames + games.length);
 
-      if (games.length < GAMES_PER_PAGE) setHasMoreGames(false);
+      if (games.length < parseInt(import.meta.env.VITE_GAMES_PER_PAGE))
+        setHasMoreGames(false);
 
       setGames((prevGames) => [...prevGames, ...games]);
     } catch (error) {

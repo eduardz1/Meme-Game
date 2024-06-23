@@ -1,7 +1,12 @@
 import { Navigate } from "react-router-dom";
 import PropTypes from "prop-types";
+import LoggedInContext from "../contexts/LoggedInContext";
+import { useContext } from "react";
+import React from "react";
 
-const ProtectedRoute = ({ children, isLoggedIn }) => {
+const ProtectedRoute = ({ children }) => {
+  const isLoggedIn = useContext(LoggedInContext);
+
   if (!isLoggedIn) {
     return <Navigate to="/" />;
   }
@@ -10,7 +15,6 @@ const ProtectedRoute = ({ children, isLoggedIn }) => {
 
 ProtectedRoute.propTypes = {
   children: PropTypes.node.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired,
 };
 
 export default ProtectedRoute;

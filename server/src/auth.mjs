@@ -21,7 +21,7 @@ class Authenticator {
         secret: "Samurai Jack!",
         resave: false,
         saveUninitialized: false,
-      })
+      }),
     );
 
     this.app.use(passport.authenticate("session"));
@@ -44,8 +44,8 @@ class Authenticator {
           } catch (err) {
             return done(err);
           }
-        }
-      )
+        },
+      ),
     );
 
     passport.serializeUser((user, done) => done(null, user));

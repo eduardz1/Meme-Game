@@ -41,7 +41,7 @@ class MemeRoutes {
         } catch (err) {
           next(err);
         }
-      }
+      },
     );
   }
 }

@@ -21,18 +21,12 @@ class GameDAO {
           Game.date,
           JSON_GROUP_ARRAY(
               JSON_OBJECT(
-                  'id',
-                  Round.id,
-                  'idMeme',
-                  Round.idMeme,
-                  'tag',
-                  Meme.tag,
-                  'idCaption',
-                  Round.idCaption,
-                  'caption',
-                  Caption.caption,
-                  'score',
-                  Round.score
+                  'id',        Round.id,
+                  'idMeme',    Round.idMeme,
+                  'tag',       Meme.tag,
+                  'idCaption', Round.idCaption,
+                  'caption',   Caption.caption,
+                  'score',     Round.score
               )
           ) AS rounds
       FROM
@@ -68,7 +62,7 @@ class GameDAO {
    */
   static recordGame(idUser, rounds) {
     const insertGame = db.prepare(
-      "INSERT INTO Game (idUser, date) VALUES (?, ?)"
+      "INSERT INTO Game (idUser, date) VALUES (?, ?)",
     );
 
     const insertRound = db.prepare(`

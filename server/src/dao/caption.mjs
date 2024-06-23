@@ -1,6 +1,9 @@
 import db from "../db/db.mjs";
 import { config } from "../../config.mjs";
 
+/**
+ * Data access object for captions.
+ */
 class CaptionDAO {
   /**
    * Returns a random mix of correct and incorrect captions for a meme.
@@ -39,8 +42,8 @@ class CaptionDAO {
                           Caption.id,
                           caption
                       FROM
-                          CorrectCaption
-                          RIGHT JOIN Caption ON CorrectCaption.idCaption = Caption.id
+                          Caption
+                          LEFT JOIN CorrectCaption ON CorrectCaption.idCaption = Caption.id
                       WHERE
                           idMeme <> @idMeme
                       ORDER BY
@@ -75,7 +78,7 @@ class CaptionDAO {
             CorrectCaption
         WHERE
             idMeme = ? AND idCaption = ?
-        `
+        `,
       )
       .get(idMeme, id).count;
   }

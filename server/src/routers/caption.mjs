@@ -37,13 +37,13 @@ class CaptionRoutes {
       (req, res, next) => {
         try {
           const captions = CaptionDAO.getRandomCaptionsForMeme(
-            req.query.idMeme
+            req.query.idMeme,
           );
           res.json(captions);
         } catch (err) {
           next(err);
         }
-      }
+      },
     );
 
     /**
@@ -62,13 +62,13 @@ class CaptionRoutes {
         try {
           const bool = CaptionDAO.validateCaption(
             req.params.id,
-            req.params.idMeme
+            req.params.idMeme,
           );
           res.json(bool);
         } catch (err) {
           next(err);
         }
-      }
+      },
     );
   }
 }

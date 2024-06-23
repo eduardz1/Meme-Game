@@ -3,6 +3,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useState, useEffect, useRef } from "react";
+import React from "react";
 
 const PEDRO = "/racoon-pedro.gif";
 
@@ -14,7 +15,7 @@ const ErrorPage = () => {
   useEffect(() => {
     const updateSize = () => {
       if (imgRef.current) {
-        setImgSize(imgRef.current.offsetHeight);
+        setImgSize(imgRef.current.offsetHeight || 300);
       }
     };
 

@@ -37,7 +37,7 @@ class AuthRoutes {
       body("email").trim().isEmail(),
       body("password").isString().notEmpty({ ignore_whitespace: true }),
       this.errorHandler.validate,
-      this.authenticator.login
+      this.authenticator.login,
     );
 
     /**
@@ -55,7 +55,7 @@ class AuthRoutes {
       "/current",
       this.authenticator.isLoggedIn,
       this.updateUserTotalScore,
-      (req, res) => res.json(req.user)
+      (req, res) => res.json(req.user),
     );
   }
 

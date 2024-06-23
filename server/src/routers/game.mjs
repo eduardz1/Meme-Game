@@ -41,13 +41,13 @@ class GameRoutes {
           const games = GameDao.getGames(
             req.user.id,
             req.query.limit || null,
-            req.query.offset || null
+            req.query.offset || null,
           );
           res.json(games);
         } catch (err) {
           next(err);
         }
-      }
+      },
     );
 
     /**
@@ -75,7 +75,7 @@ class GameRoutes {
         } catch (err) {
           next(err);
         }
-      }
+      },
     );
   }
 }

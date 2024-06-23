@@ -1,27 +1,49 @@
 import PropTypes from "prop-types";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import MessageContext from "../contexts/MessageContext";
 import Round from "./Round";
+import React from "react";
 import EndScreen from "./EndScreen";
+import { useNavigate } from "react-router-dom";
+import LoggedInContext from "../contexts/LoggedInContext";
+import API from "../../api/API.mjs";
 
-const Game = ({ memes, endGame }) => {
+const Game = ({ memes, setMemes }) => {
+  const navigate = useNavigate();
+
+  const { setError } = useContext(MessageContext);
+
+  const isLoggedIn = useContext(LoggedInContext);
+
   const [rounds, setRounds] = useState([]);
   const [currentRound, setCurrentRound] = useState(0);
   const [isConfirmed, setConfirmed] = useState(false);
 
-  useEffect(() => {
-    // Filter out unnecessary fields
-    const cleanedUpRounds = rounds.map((round) => {
-      const { idMeme, idCaption, score, tag, caption } = round;
-      return { idMeme, idCaption, score };
-    });
+  const endGame = async (rounds) => {
+    try {
+      if (isLoggedIn) await API.recordGame(rounds);
 
-    if (isConfirmed) endGame(cleanedUpRounds);
-  }, [isConfirmed]);
+      navigate("/");
+      setMemes([]);
+    } catch (error) {
+      setError(error);
+    }
+  };
 
   const endRound = ({ idMeme, idCaption, score, tag, caption }) => {
     setRounds([...rounds, { idMeme, idCaption, score, tag, caption }]);
     setCurrentRound(currentRound + 1);
   };
+
+  useEffect(() => {
+    // Filter out unnecessary fields
+    const cleanedUpRounds = rounds.map((round) => {
+      const { idMeme, idCaption, score } = round;
+      return { idMeme, idCaption, score };
+    });
+
+    if (isConfirmed) endGame(cleanedUpRounds);
+  }, [isConfirmed]);
 
   return (
     <>
@@ -50,7 +72,7 @@ const Game = ({ memes, endGame }) => {
 
 Game.propTypes = {
   memes: PropTypes.array.isRequired,
-  endGame: PropTypes.func.isRequired,
+  setMemes: PropTypes.func.isRequired,
 };
 
 export default Game;

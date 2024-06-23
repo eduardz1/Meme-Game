@@ -1,5 +1,6 @@
 import { Button } from "react-bootstrap";
 import PropTypes from "prop-types";
+import React from "react";
 
 const LogoutButton = ({ handleLogout }) => {
   return (

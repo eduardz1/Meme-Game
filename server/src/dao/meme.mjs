@@ -14,8 +14,6 @@ class MemeDAO {
       .prepare("SELECT * FROM Meme ORDER BY RANDOM() LIMIT ?")
       .all(count);
   }
-
-  
 }
 
 export default MemeDAO;

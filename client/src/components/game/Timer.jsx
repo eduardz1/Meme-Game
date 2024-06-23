@@ -1,14 +1,18 @@
 import { useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
+import React from "react";
+import styles from "./Animations.module.css";
+import Container from "react-bootstrap/Container";
 
-const TIMER_DURATION = 30;
 const STROKE_WIDTH = 12;
 const RADIUS = 30;
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 
 const Timer = ({ handleClick }) => {
   const Ref = useRef(null);
-  const [timer, setTimer] = useState(TIMER_DURATION);
+  const [timer, setTimer] = useState(
+    parseInt(import.meta.env.VITE_TIMER_DURATION),
+  );
   const [offset, setOffset] = useState(CIRCUMFERENCE);
 
   const getTimeRemaining = (e) => {
@@ -18,11 +22,11 @@ const Timer = ({ handleClick }) => {
   };
 
   const getColor = (seconds) => {
-    if (seconds <= TIMER_DURATION * 0.1) {
+    if (seconds <= parseInt(import.meta.env.VITE_TIMER_DURATION) * 0.1) {
       return "red";
-    } else if (seconds <= TIMER_DURATION * 0.3) {
+    } else if (seconds <= parseInt(import.meta.env.VITE_TIMER_DURATION) * 0.3) {
       return "orange";
-    } else if (seconds <= TIMER_DURATION * 0.6) {
+    } else if (seconds <= parseInt(import.meta.env.VITE_TIMER_DURATION) * 0.6) {
       return "yellow";
     } else {
       return "green";
@@ -30,20 +34,24 @@ const Timer = ({ handleClick }) => {
   };
 
   const startTimer = (e) => {
-    setTimer(TIMER_DURATION);
+    setTimer(parseInt(import.meta.env.VITE_TIMER_DURATION));
 
     // Clear the old interval at the beginning of the new one
     if (Ref.current) clearInterval(Ref.current);
 
     const id = setInterval(() => {
       const seconds = getTimeRemaining(e);
+      setTimer(seconds);
+
       if (seconds <= 0) {
         handleClick(null);
         clearInterval(Ref.current);
       }
 
-      setTimer(seconds);
-      setOffset((seconds / TIMER_DURATION) * CIRCUMFERENCE);
+      setOffset(
+        (seconds / parseInt(import.meta.env.VITE_TIMER_DURATION)) *
+          CIRCUMFERENCE,
+      );
     }, 1000);
 
     Ref.current = id;
@@ -51,7 +59,9 @@ const Timer = ({ handleClick }) => {
 
   const getTimerEnd = () => {
     let deadline = new Date();
-    deadline.setSeconds(deadline.getSeconds() + TIMER_DURATION);
+    deadline.setSeconds(
+      deadline.getSeconds() + parseInt(import.meta.env.VITE_TIMER_DURATION),
+    );
     return deadline;
   };
 
@@ -73,13 +83,13 @@ const Timer = ({ handleClick }) => {
   }, []);
 
   return (
-    <div
+    <Container
+      className={timer == 1 ? styles.shakeAnimation : ""}
       style={{
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         position: "relative",
-        animation: timer === 0 ? "shake 0.5s" : "none",
       }}
     >
       <svg
@@ -124,7 +134,7 @@ const Timer = ({ handleClick }) => {
       >
         {timer}
       </div>
-    </div>
+    </Container>
   );
 };
 

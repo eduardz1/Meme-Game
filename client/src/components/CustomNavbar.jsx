@@ -8,14 +8,14 @@ import ButtonToolbar from "react-bootstrap/ButtonToolbar";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import React from "react";
 import Image from "react-bootstrap/Image";
+import LoggedInContext from "./contexts/LoggedInContext";
+import { useContext } from "react";
 
-const CustomNavbar = ({
-  isLoggedIn,
-  handleLogout,
-  handleLogin,
-  fetchUserInfo,
-}) => {
+const CustomNavbar = ({ handleLogout, handleLogin, fetchUserInfo }) => {
+  const isLoggedIn = useContext(LoggedInContext);
+
   return (
     <>
       <Navbar expand="lg" className="bg-body-tertiary">
@@ -55,7 +55,6 @@ const CustomNavbar = ({
 };
 
 CustomNavbar.propTypes = {
-  isLoggedIn: PropTypes.bool.isRequired,
   handleLogin: PropTypes.func.isRequired,
   handleLogout: PropTypes.func.isRequired,
   fetchUserInfo: PropTypes.func.isRequired,

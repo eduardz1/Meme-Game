@@ -3,6 +3,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import PropTypes from "prop-types";
+import React from "react";
 
 const MemesCard = ({ rounds, fontSize }) => {
   return (

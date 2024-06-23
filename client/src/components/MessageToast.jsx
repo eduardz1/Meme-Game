@@ -1,8 +1,12 @@
 import Toast from "react-bootstrap/Toast";
 import ToastContainer from "react-bootstrap/ToastContainer";
-import PropTypes from "prop-types";
+import React from "react";
+import { useContext } from "react";
+import MessageContext from "./contexts/MessageContext";
 
-const MessageToast = ({ message, setMessage }) => {
+const MessageToast = () => {
+  const { message, setMessage } = useContext(MessageContext);
+
   return (
     <ToastContainer className="p-3" position="top-center">
       <Toast
@@ -24,11 +28,6 @@ const MessageToast = ({ message, setMessage }) => {
       </Toast>
     </ToastContainer>
   );
-};
-
-MessageToast.propTypes = {
-  message: PropTypes.object,
-  setMessage: PropTypes.func,
 };
 
 export default MessageToast;

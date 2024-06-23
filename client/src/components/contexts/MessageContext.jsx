@@ -1,9 +1,11 @@
 import React from "react";
 
 const MessageContext = React.createContext({
-  setInfo: (info) => {},
-  setError: (error) => {},
-  setWarning: (warning) => {},
+  message: "",
+  setMessage: () => {},
+  setInfo: () => {},
+  setError: () => {},
+  setWarning: () => {},
 });
 
 export default MessageContext;

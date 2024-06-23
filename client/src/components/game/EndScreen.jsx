@@ -6,8 +6,7 @@ import { useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
 import MemesCard from "../MemeCard";
-
-const NUM_REACTION_IMAGES = 4;
+import React from "react";
 
 const EndScreen = ({ setConfirmed, rounds }) => {
   const [show, setShow] = useState(true);
@@ -24,7 +23,10 @@ const EndScreen = ({ setConfirmed, rounds }) => {
   };
 
   const getRandomImage = (folder) => {
-    const imageNumber = Math.floor(Math.random() * NUM_REACTION_IMAGES) + 1;
+    const imageNumber =
+      Math.floor(
+        Math.random() * parseInt(import.meta.env.VITE_NUM_REACTION_IMAGES),
+      ) + 1;
     return `reactions/${folder}/${imageNumber}.gif`;
   };
 

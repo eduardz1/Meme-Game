@@ -8,19 +8,43 @@ import Row from "react-bootstrap/Row";
 import { useState, useEffect } from "react";
 import MessageContext from "../contexts/MessageContext.jsx";
 import Timer from "./Timer";
+import React from "react";
 import API from "../../api/API.mjs";
-
-const POINTS_CORRECT_GUESS = 5;
-const POINTS_INCORRECT_GUESS = 0;
+import styles from "./Animations.module.css";
 
 const Round = ({ endRound, meme }) => {
   const { setInfo, setWarning, setError } = useContext(MessageContext);
-
-  const [clickedButton, setClickedButton] = useState(null);
   const [isCorrect, setIsCorrect] = useState(null);
 
   // Used to avoid showing the captions a split second before the image
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [clickedButton, setClickedButton] = useState(null);
+
+  useEffect(() => {
+    setClickedButton(null);
+  }, [meme]);
+
+  // Get the variant for the button based on the current state, if the button
+  // has been clicked, show the success or danger variant based on whether the
+  // caption is correct. If a button has been clicked and it was the incorrect
+  // one, show the success variants for the correct captions.
+  const getButtonVariant = (index) => {
+    if (clickedButton === index) return isCorrect ? "success" : "danger";
+
+    if (clickedButton !== null && meme.captions[index].isCorrect && !isCorrect)
+      return "success";
+
+    return "light";
+  };
+
+  // If the button has been clicked and it was the incorrect one, add a shake,
+  // otherwise add a press animation
+  const getButtonClassName = (index) => {
+    if (clickedButton === index)
+      return isCorrect ? styles.pressAnimation : styles.shortShakeAnimation;
+
+    return "";
+  };
 
   // Update all the captions except for the one we already know the truthiness of
   const fetchCaptionsInfo = async (index) => {
@@ -30,7 +54,7 @@ const Round = ({ endRound, meme }) => {
 
         const isCorrectGuess = await API.validateCaption(
           meme.captions[i].id,
-          meme.id
+          meme.id,
         );
 
         meme.captions[i].isCorrect = isCorrectGuess;
@@ -48,7 +72,7 @@ const Round = ({ endRound, meme }) => {
       } else {
         isCorrectGuess = await API.validateCaption(
           meme.captions[index].id,
-          meme.id
+          meme.id,
         );
 
         setIsCorrect(isCorrectGuess);
@@ -62,7 +86,9 @@ const Round = ({ endRound, meme }) => {
       setTimeout(() => {
         endRound({
           idMeme: meme.id,
-          score: isCorrectGuess ? POINTS_CORRECT_GUESS : POINTS_INCORRECT_GUESS,
+          score: isCorrectGuess
+            ? parseInt(import.meta.env.VITE_POINTS_CORRECT_GUESS)
+            : parseInt(import.meta.env.VITE_POINTS_INCORRECT_GUESS),
           tag: meme.tag,
           idCaption: index === null ? null : meme.captions[index].id,
           caption: index === null ? null : meme.captions[index].caption,
@@ -72,10 +98,6 @@ const Round = ({ endRound, meme }) => {
       setError(error);
     }
   };
-
-  useEffect(() => {
-    setClickedButton(null);
-  }, [meme]);
 
   return (
     <Col lg={8} className="mx-auto">
@@ -87,6 +109,7 @@ const Round = ({ endRound, meme }) => {
               display: "inline-flex",
             }}
           >
+            {/* Overlay the timer to the meme */}
             <div
               style={{
                 position: "absolute",
@@ -111,54 +134,16 @@ const Round = ({ endRound, meme }) => {
           meme.captions.map((caption, index) => (
             <Row key={index} className="mb-3">
               <Col>
-                <style>{`
-                  .btn-danger {
-                      transition: all 0.5s ease;
-                      animation: shake 0.5s forwards;
-                  }
-
-                  .btn:active {
-                      transform: scale(0.9);
-                      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
-                  }
-
-                  @keyframes shake {
-                      0% { transform: translate(1px, 1px) rotate(0deg); }
-                      10% { transform: translate(-1px, -2px) rotate(-1deg); }
-                      20% { transform: translate(-3px, 0px) rotate(1deg); }
-                      30% { transform: translate(3px, 2px) rotate(0deg); }
-                      40% { transform: translate(1px, -1px) rotate(1deg); }
-                      50% { transform: translate(-1px, 2px) rotate(-1deg); }
-                      60% { transform: translate(-3px, 1px) rotate(0deg); }
-                      70% { transform: translate(3px, 1px) rotate(-1deg); }
-                      80% { transform: translate(-1px, -1px) rotate(1deg); }
-                      90% { transform: translate(1px, 2px) rotate(0deg); }
-                      100% { transform: translate(1px, -2px) rotate(-1deg); }
-                  }
-                `}</style>
                 <Button
-                  variant={
-                    // If the button has been clicked, show the success or
-                    // danger variant based on whether the caption is correct.
-                    // If a button has been clicked and it was the incorrect
-                    // one, show the success variants for the correct captions.
-                    clickedButton === index
-                      ? isCorrect
-                        ? "success"
-                        : "danger"
-                      : clickedButton !== null &&
-                          caption.isCorrect &&
-                          !isCorrect
-                        ? "success"
-                        : "light"
-                  }
+                  variant={getButtonVariant(index)}
                   size="lg"
-                  className="w-100"
+                  className={`w-100 ${getButtonClassName(index)}`}
                   style={{
                     fontFamily: "Impact",
                     textTransform: "uppercase",
                     fontSize: "2rem",
                     color: "white",
+                    transition: "all 0.3s ease",
                     textShadow:
                       "-2px -2px 0px black, 2px -2px 0px black, -2px 2px 0px black, 2px 2px 0px black",
                   }}
