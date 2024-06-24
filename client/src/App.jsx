@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import CustomNavbar from "./components/CustomNavbar";
 import MessageToast from "./components/MessageToast";
 import MessageContext from "./components/contexts/MessageContext.jsx";
@@ -15,17 +15,26 @@ import Profile from "./components/user/Profile";
 import API from "./api/API.mjs";
 
 const App = () => {
+  const navigate = useNavigate();
+
   const { message, setError, setInfo, setWarning, setMessage } =
     useMessageContext();
 
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
 
+  const [memes, setMemes] = useState([]);
+
+  useEffect(() => {
+    fetchUserInfo();
+  }, []);
+
   const handleLogin = async (email, password) => {
     try {
       const user = await API.login(email, password);
       setLoggedIn(true);
       setUser(user);
+      navigate("/");
       setInfo(`Welcome, ${user.name}!`);
     } catch (error) {
       setError(error);
@@ -37,6 +46,7 @@ const App = () => {
       await API.logout();
       setLoggedIn(false);
       setUser(null);
+      navigate("/");
       setInfo("You have been logged out.");
     } catch (error) {
       setError(error);
@@ -56,12 +66,6 @@ const App = () => {
       setUser(null);
     }
   };
-
-  const [memes, setMemes] = useState([]);
-
-  useEffect(() => {
-    fetchUserInfo();
-  }, []);
 
   return (
     <ErrorBoundary>

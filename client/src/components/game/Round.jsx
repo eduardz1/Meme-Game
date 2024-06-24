@@ -20,6 +20,7 @@ const Round = ({ endRound, meme }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [clickedButton, setClickedButton] = useState(null);
 
+  // Reset the clicked button when the meme changes
   useEffect(() => {
     setClickedButton(null);
   }, [meme]);
