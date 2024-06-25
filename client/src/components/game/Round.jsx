@@ -6,12 +6,16 @@ import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
 import Row from "react-bootstrap/Row";
 import { useState, useEffect } from "react";
-import MessageContext from "../contexts/MessageContext.jsx";
+import MessageContext from "../contexts/message/MessageContext.jsx";
 import Timer from "./Timer";
 import React from "react";
 import API from "../../api/API.mjs";
 import styles from "./Animations.module.css";
 
+/**
+ * Component that renders the round of the game, showing the meme and the
+ * captions to guess from.
+ */
 const Round = ({ endRound, meme }) => {
   const { setInfo, setWarning, setError } = useContext(MessageContext);
   const [isCorrect, setIsCorrect] = useState(null);
@@ -25,10 +29,12 @@ const Round = ({ endRound, meme }) => {
     setClickedButton(null);
   }, [meme]);
 
-  // Get the variant for the button based on the current state, if the button
-  // has been clicked, show the success or danger variant based on whether the
-  // caption is correct. If a button has been clicked and it was the incorrect
-  // one, show the success variants for the correct captions.
+  /**
+   * Get the variant for the button based on the current state, if the button
+   * has been clicked, show the success or danger variant based on whether the
+   * caption is correct. If a button has been clicked and it was the incorrect
+   * one, show the success variants for the correct captions.
+   */
   const getButtonVariant = (index) => {
     if (clickedButton === index) return isCorrect ? "success" : "danger";
 
@@ -38,8 +44,10 @@ const Round = ({ endRound, meme }) => {
     return "light";
   };
 
-  // If the button has been clicked and it was the incorrect one, add a shake,
-  // otherwise add a press animation
+  /**
+   * If the button has been clicked and it was the incorrect one, add a shake,
+   * otherwise add a press animation
+   */
   const getButtonClassName = (index) => {
     if (clickedButton === index)
       return isCorrect ? styles.pressAnimation : styles.shortShakeAnimation;
@@ -47,7 +55,9 @@ const Round = ({ endRound, meme }) => {
     return "";
   };
 
-  // Update all the captions except for the one we already know the truthiness of
+  /**
+   * Update all the captions except for the one we already know the truthiness of
+   */
   const fetchCaptionsInfo = async (index) => {
     try {
       for (let i = 0; i < meme.captions.length; i++) {
@@ -65,6 +75,11 @@ const Round = ({ endRound, meme }) => {
     }
   };
 
+  /**
+   * Handle the click of a button, validate the caption and update the state
+   * accordingly. Triggers MessageToast to show the result of the guess.
+   * If the index is null, the user ran out of time.
+   */
   const handleClick = async (index) => {
     try {
       let isCorrectGuess = false;

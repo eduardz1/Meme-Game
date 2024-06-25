@@ -1,26 +1,26 @@
 # Exam #1: "Meme Game"
 
-- [Exam #1: "Meme Game"](#exam-1-meme-game)
-  - [Student: s332100 OCCHIPINTI EDUARD ANTONOVIC](#student-s332100-occhipinti-eduard-antonovic)
-  - [React Client Application Routes](#react-client-application-routes)
-  - [Main React Components](#main-react-components)
-  - [API Server](#api-server)
-  - [Database Tables](#database-tables)
-    - [Short overview](#short-overview)
-    - [Tables (7)](#tables-7)
-      - [CorrectCaption](#correctcaption)
-      - [Caption](#caption)
-      - [Round](#round)
-      - [Meme](#meme)
-      - [Game](#game)
-      - [User](#user)
-    - [Triggers (2)](#triggers-2)
-      - [Round.AfterInsert](#roundafterinsert)
-      - [Game.BeforeDelete](#gamebeforedelete)
-  - [Screenshots](#screenshots)
-  - [Users Credentials](#users-credentials)
-
 ## Student: s332100 OCCHIPINTI EDUARD ANTONOVIC
+
+- [Exam #1: "Meme Game"](#exam-1-meme-game)
+	- [Student: s332100 OCCHIPINTI EDUARD ANTONOVIC](#student-s332100-occhipinti-eduard-antonovic)
+	- [React Client Application Routes](#react-client-application-routes)
+	- [Main React Components](#main-react-components)
+	- [API Server](#api-server)
+	- [Database Tables](#database-tables)
+		- [Short overview](#short-overview)
+		- [Tables (7)](#tables-7)
+			- [CorrectCaption](#correctcaption)
+			- [Caption](#caption)
+			- [Round](#round)
+			- [Meme](#meme)
+			- [Game](#game)
+			- [User](#user)
+		- [Triggers (2)](#triggers-2)
+			- [Round.AfterInsert](#roundafterinsert)
+			- [Game.BeforeDelete](#gamebeforedelete)
+	- [Screenshots](#screenshots)
+	- [Users Credentials](#users-credentials)
 
 ## React Client Application Routes
 
@@ -30,12 +30,14 @@
 
 ## Main React Components
 
-- `Profile` (in `components/user/Profile.jsx`): component used to render the profile of the user, consisting of the game history and the total score
-- `Game` (in `components/game/Game.jsx`): component used to render the game, consisting of the meme, the correct caption and the incorrect captions
-- `Round` (in `components/game/Round.jsx`): where all the game logic actually takes place
-- `CustomNavbar.jsx` (in `components/CustomNavbar.jsx`): component used to render the navigation bar which includes the login/logout button, the profile button (if logged in) and the home button
-- `MemeCard` (in `components/MemeCard.jsx`): component used to render a meme with an associated caption and give it an appropriate background based on the correctness of the caption, is reused both to show the end game screen and to show the history
-- `App` (in `App.jsx`): main component of the application, contains the routing logic and the state of the user
+- [`Profile`](client/src/components/user/Profile.jsx): component used to render the profile of the user, consisting of the game history and the total score
+  - [`GameHistory`](client/src/components/user/GameHistory.jsx): component used to display the history of the games, the history is loaded in fixed-size batches to avoid potentially sending huge amounts of data at once
+- [`Game`](client/src/components/game/Game.jsx): component used to render the game, consisting of the meme, the correct caption and the incorrect captions
+  - [`Round`](client/src/components/game/Round.jsx): where all the game logic takes place.
+  - [`Timer`](client/src/components/game/Timer.jsx): component used to render the timer of the game
+- [`CustomNavbar`](client/src/components/CustomNavbar.jsx): component used to render the navigation bar which includes the login/logout button, the profile button (if logged in) and the home button
+- [`MemeCards`](client/src/components/MemeCards.jsx): component used to render a meme with an associated caption and give it an appropriate background based on the correctness of the caption, is reused both to show the end game screen and to show the history
+- [`App`](client/src/App.jsx): main component of the application, contains the routing logic and the state of the user
 
 ## API Server
 
@@ -67,7 +69,7 @@
   - response body content: `[{ id: number, caption: string }]`
   - response status code: 200
   - possible errors: 500 (Internal Server Error)
-- GET `/api/captions/:id/:idMeme`: responds whether or not the caption is correct
+- GET `/api/captions/:id/:idMeme`: responds whether the caption is correct
   - request parameters: `idMeme` (meme id), `id` (caption id)
   - response body content: `true | false`
   - response status code: 200
@@ -218,11 +220,11 @@ END;
 
 ![home page](imgs/home-page.png)
 ![play screen](imgs/play-screen.png)
-![correct guess](imgs/correct-guess.png)
-![wrong guess](imgs/wrong-guess.png)
+![correct guess](imgs/correct-guess.gif)
+![wrong guess](imgs/wrong-guess.gif)
 ![end game screen](imgs/end-game-screen.png)
 ![profile page with history](imgs/profile-page-history.png)
-![past games recap](imgs/past-games-recap.png)
+![past games recap](imgs/past-games-recap.gif)
 
 ## Users Credentials
 

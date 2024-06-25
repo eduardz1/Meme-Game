@@ -13,6 +13,9 @@ import Image from "react-bootstrap/Image";
 import LoggedInContext from "./contexts/LoggedInContext";
 import { useContext } from "react";
 
+/**
+ * Navbar component that displays the logo and the login/logout buttons.
+ */
 const CustomNavbar = ({ handleLogout, handleLogin, fetchUserInfo }) => {
   const isLoggedIn = useContext(LoggedInContext);
 

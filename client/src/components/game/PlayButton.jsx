@@ -2,12 +2,15 @@ import Button from "react-bootstrap/Button";
 import PropTypes from "prop-types";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import MessageContext from "../contexts/MessageContext";
+import MessageContext from "../contexts/message/MessageContext";
 import API from "../../api/API.mjs";
 import LoggedInContext from "../contexts/LoggedInContext";
 import React from "react";
 import styles from "./Animations.module.css";
 
+/**
+ * Button that starts the game by fetching memes and captions from the API
+ */
 const PlayButton = ({ setMemes }) => {
   const [isActive, setIsActive] = useState(false);
 
@@ -32,6 +35,10 @@ const PlayButton = ({ setMemes }) => {
   const { setError } = useContext(MessageContext);
   const isLoggedIn = useContext(LoggedInContext);
 
+  /**
+   * Fetch memes and captions from the API and start the game by navigating to
+   * the play screen
+   */
   const startGame = async () => {
     try {
       let memes = await API.getRandomMemes(

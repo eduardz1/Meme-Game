@@ -8,6 +8,9 @@ const STROKE_WIDTH = 12;
 const RADIUS = 30;
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 
+/**
+ * Component used to show the countdown timer for the round.
+ */
 const Timer = ({ handleClick }) => {
   const Ref = useRef(null);
   const [timer, setTimer] = useState(
@@ -15,12 +18,18 @@ const Timer = ({ handleClick }) => {
   );
   const [offset, setOffset] = useState(CIRCUMFERENCE);
 
-  const getTimeRemaining = (e) => {
-    const total = Date.parse(e) - Date.parse(new Date());
+  /**
+   * Returns the number of seconds remaining.
+   */
+  const getTimeRemaining = (deadline) => {
+    const total = Date.parse(deadline) - Date.parse(new Date());
     const seconds = Math.floor((total / 1000) % 60);
     return seconds;
   };
 
+  /**
+   * Changes color based on the time remaining.
+   */
   const getColor = (seconds) => {
     if (seconds <= parseInt(import.meta.env.VITE_TIMER_DURATION) * 0.1) {
       return "red";
@@ -33,14 +42,19 @@ const Timer = ({ handleClick }) => {
     }
   };
 
-  const startTimer = (e) => {
+  /**
+   * Starts the timer and updates the offset of the timer circle. If the timer
+   * reaches 0, the round is ended. The timer is updated every second by a
+   * setInterval.
+   */
+  const startTimer = (deadline) => {
     setTimer(parseInt(import.meta.env.VITE_TIMER_DURATION));
 
     // Clear the old interval at the beginning of the new one
     if (Ref.current) clearInterval(Ref.current);
 
     const id = setInterval(() => {
-      const seconds = getTimeRemaining(e);
+      const seconds = getTimeRemaining(deadline);
       setTimer(seconds);
 
       if (seconds <= 0) {
@@ -57,6 +71,9 @@ const Timer = ({ handleClick }) => {
     Ref.current = id;
   };
 
+  /**
+   * Returns the end time of the timer.
+   */
   const getTimerEnd = () => {
     let deadline = new Date();
     deadline.setSeconds(
@@ -65,15 +82,25 @@ const Timer = ({ handleClick }) => {
     return deadline;
   };
 
+  /**
+   * Resets the timer to its initial state.
+   */
   const resetTimer = () => {
     setOffset(CIRCUMFERENCE);
     startTimer(getTimerEnd());
   };
 
+  /**
+   * On click, reset the timer.
+   */
   useEffect(() => {
     resetTimer();
   }, [handleClick]);
 
+  /**
+   * Starts the timer when the component is mounted. Clears the interval when
+   * the component is unmounted.
+   */
   useEffect(() => {
     startTimer(getTimerEnd());
 

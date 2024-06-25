@@ -4,6 +4,9 @@ import LoggedInContext from "../contexts/LoggedInContext";
 import { useContext } from "react";
 import React from "react";
 
+/**
+ * Component used to protect routes that require the user to be logged in.
+ */
 const ProtectedRoute = ({ children }) => {
   const isLoggedIn = useContext(LoggedInContext);
 

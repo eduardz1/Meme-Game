@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { useState, useEffect, useContext } from "react";
-import MessageContext from "../contexts/MessageContext";
+import MessageContext from "../contexts/message/MessageContext";
 import Round from "./Round";
 import React from "react";
 import EndScreen from "./EndScreen";
@@ -8,6 +8,10 @@ import { useNavigate } from "react-router-dom";
 import LoggedInContext from "../contexts/LoggedInContext";
 import API from "../../api/API.mjs";
 
+/**
+ * Game component that renders either the round or the end screen and contacts
+ * the API to record the game. Also manages the logic to end each round
+ */
 const Game = ({ memes, setMemes }) => {
   const navigate = useNavigate();
 
@@ -19,6 +23,12 @@ const Game = ({ memes, setMemes }) => {
   const [currentRound, setCurrentRound] = useState(0);
   const [isConfirmed, setConfirmed] = useState(false);
 
+  /**
+   * Ends game by recording the result through the API and navigating back to home
+   *
+   * @param {Array.<{number, number, number, string, string}>} rounds the rounds
+   *  played by the user
+   */
   const endGame = async (rounds) => {
     try {
       if (isLoggedIn) await API.recordGame(rounds);
@@ -30,6 +40,9 @@ const Game = ({ memes, setMemes }) => {
     }
   };
 
+  /**
+   * End round by recording the result and moving to the next round
+   */
   const endRound = ({ idMeme, idCaption, score, tag, caption }) => {
     setRounds([...rounds, { idMeme, idCaption, score, tag, caption }]);
     setCurrentRound(currentRound + 1);

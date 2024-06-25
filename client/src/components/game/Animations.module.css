@@ -43,14 +43,14 @@
   }
 }
 
-@keyframes press {
+@keyframes zoom {
   0% {
     transform: scale(1);
     box-shadow: none;
   }
   50% {
-    transform: scale(0.9);
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   }
   100% {
     transform: scale(1);
@@ -71,5 +71,5 @@
 }
 
 .pressAnimation {
-  animation: press 0.3s;
+  animation: zoom 0.2s;
 }

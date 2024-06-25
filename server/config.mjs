@@ -1,4 +1,4 @@
 export const config = {
-  numCorrectMemes: 2,
-  numIncorrectMemes: 5,
+  numCorrectCaptions: 2,
+  numIncorrectCaptions: 5,
 };

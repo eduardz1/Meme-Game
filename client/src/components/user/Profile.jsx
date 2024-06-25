@@ -5,6 +5,10 @@ import React from "react";
 
 import PropTypes from "prop-types";
 
+/**
+ * Component used to display the user's profile, at the moment consisting of
+ * only the total score and game history.
+ */
 const Profile = ({ user }) => {
   return (
     <Container>

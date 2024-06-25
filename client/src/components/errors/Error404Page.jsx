@@ -7,6 +7,9 @@ import React from "react";
 
 const PEDRO = "/racoon-pedro.gif";
 
+/**
+ * A fun 404 error page.
+ */
 const ErrorPage = () => {
   const [imgSize, setImgSize] = useState(0);
   const imgRef = useRef(null);

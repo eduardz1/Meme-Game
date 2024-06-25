@@ -5,9 +5,13 @@ import Image from "react-bootstrap/Image";
 import { useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
-import MemesCard from "../MemeCard";
+import MemeCards from "../MemeCards";
 import React from "react";
 
+/**
+ * End screen of the game with the total score and a summary of the correctly
+ * selected memes
+ */
 const EndScreen = ({ setConfirmed, rounds }) => {
   const [show, setShow] = useState(true);
   const [reactionImage, setReactionImage] = useState("");
@@ -16,12 +20,22 @@ const EndScreen = ({ setConfirmed, rounds }) => {
     setReactionImage(getReaction());
   }, []);
 
-  // Logged in users play more rounds so we have to calculate a percentage
+  /**
+   * Get percentage of correct guesses. Logged in users play more rounds so
+   * we have to calculate a percentage to decide if the user did good or bad.
+   */
   const getCorrectPercentage = () => {
     const correct = rounds.filter((round) => round.score > 0);
     return (correct.length / rounds.length) * 100;
   };
 
+  /**
+   * Get a random image from a folder populated with
+   * images encoded as "[1-VITE_NUM_REACTION_IMAGES].gif"
+   *
+   * @param {string} folder folder to scan for images
+   * @returns path of the randomly chosen image
+   */
   const getRandomImage = (folder) => {
     const imageNumber =
       Math.floor(
@@ -30,6 +44,9 @@ const EndScreen = ({ setConfirmed, rounds }) => {
     return `reactions/${folder}/${imageNumber}.gif`;
   };
 
+  /**
+   * Get a reaction image based on the percentage of correct guesses
+   */
   const getReaction = () => {
     const correctPercentage = getCorrectPercentage();
     if (correctPercentage === 100) {
@@ -72,7 +89,7 @@ const EndScreen = ({ setConfirmed, rounds }) => {
                   <h3>Correctly guessed captions</h3>
                 </Card.Header>
                 <Card.Body>
-                  <MemesCard
+                  <MemeCards
                     rounds={rounds.filter((round) => round.score !== 0)}
                   />
                 </Card.Body>

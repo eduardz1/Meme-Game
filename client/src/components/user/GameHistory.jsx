@@ -7,15 +7,24 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import API from "../../api/API.mjs";
 import React from "react";
-import MemesCard from "../MemeCard";
-import MessageContext from "../contexts/MessageContext.jsx";
+import MemeCards from "../MemeCards.jsx";
+import MessageContext from "../contexts/message/MessageContext.jsx";
 
+/**
+ * Component that renders the game history of the user
+ */
 const GameHistory = () => {
   const { setError } = useContext(MessageContext);
   const [loadedGames, setLoadedGames] = useState(0);
   const [hasMoreGames, setHasMoreGames] = useState(true);
   const [games, setGames] = useState([]);
 
+  /**
+   * Function used to render more (VITE_GAMES_PER_PAGE number) games for each
+   * click of the button to avoid rendering them all at once, useful when users
+   * start having hundreds of games played, realistically only the last few
+   * games are of interest anyway.
+   */
   const loadMoreGames = async () => {
     try {
       const games = await API.getGames({
@@ -54,7 +63,7 @@ const GameHistory = () => {
               </Container>
             </Accordion.Header>
             <Accordion.Body>
-              <MemesCard rounds={game.rounds} fontSize={"2rem"}></MemesCard>
+              <MemeCards rounds={game.rounds}></MemeCards>
             </Accordion.Body>
           </Accordion.Item>
         ))}

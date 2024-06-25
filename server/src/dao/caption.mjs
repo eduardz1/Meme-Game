@@ -12,53 +12,54 @@ class CaptionDAO {
    */
   static getRandomCaptionsForMeme(idMeme) {
     const sql = `
-      SELECT
-          *
-      FROM
-          (
-              SELECT
-                  *
-              FROM
-                  (
-                      SELECT
-                          Caption.id,
-                          caption
-                      FROM
-                          CorrectCaption
-                          JOIN Caption ON CorrectCaption.idCaption = Caption.id
-                      WHERE
-                          idMeme = @idMeme
-                      ORDER BY
-                          RANDOM()
-                      LIMIT
-                          @numCorrectCaptions
-                  )
-              UNION
-              SELECT
-                  *
-              FROM
-                  (
-                      SELECT
-                          Caption.id,
-                          caption
-                      FROM
-                          Caption
-                          LEFT JOIN CorrectCaption ON CorrectCaption.idCaption = Caption.id
-                      WHERE
-                          idMeme <> @idMeme
-                      ORDER BY
-                          RANDOM()
-                      LIMIT
-                          @numIncorrectCaptions
-                  )
-          )
-      ORDER BY
-          RANDOM();`;
+        WITH CorrectCaptions AS (
+            SELECT
+                Caption.id,
+                caption
+            FROM
+                CorrectCaption
+                JOIN Caption ON CorrectCaption.idCaption = Caption.id
+            WHERE
+                idMeme = @idMeme
+            ORDER BY
+                RANDOM()
+            LIMIT
+                @numCorrectCaptions
+        ), IncorrectCaptions AS (
+            SELECT
+                Caption.id,
+                caption
+            FROM
+                Caption
+                LEFT JOIN CorrectCaption ON CorrectCaption.idCaption = Caption.id
+            WHERE
+                idMeme <> @idMeme
+            ORDER BY
+                RANDOM()
+            LIMIT
+                @numIncorrectCaptions
+        )
+        SELECT
+            *
+        FROM
+            (
+                SELECT
+                    *
+                FROM
+                    CorrectCaptions
+                UNION ALL
+                SELECT
+                    *
+                FROM
+                    IncorrectCaptions
+            )
+        ORDER BY
+            RANDOM();`;
 
     return db.prepare(sql).all({
       idMeme: idMeme,
-      numCorrectCaptions: config.numCorrectMemes,
-      numIncorrectCaptions: config.numIncorrectMemes,
+      numCorrectCaptions: config.numCorrectCaptions,
+      numIncorrectCaptions: config.numIncorrectCaptions,
     });
   }
 

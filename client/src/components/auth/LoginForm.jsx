@@ -5,6 +5,9 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import React from "react";
 
+/**
+ * A form for logging in. handles only the data, not the API call.
+ */
 const LoginForm = ({ handleLogin }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

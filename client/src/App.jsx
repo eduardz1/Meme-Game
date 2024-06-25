@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import React from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import CustomNavbar from "./components/CustomNavbar";
-import MessageToast from "./components/MessageToast";
-import MessageContext from "./components/contexts/MessageContext.jsx";
-import useMessageContext from "./components/contexts/useMessageContext.mjs";
+import MessageToast from "./components/contexts/message/MessageToast";
+import MessageContext from "./components/contexts/message/MessageContext.jsx";
+import useMessageContext from "./components/contexts/message/useMessageContext.mjs";
 import ErrorPage from "./components/errors/Error404Page";
 import ErrorBoundary from "./components/errors/ErrorBoundary";
 import ProtectedRoute from "./components/errors/ProtectedRoute";
@@ -14,6 +14,9 @@ import PlayButton from "./components/game/PlayButton";
 import Profile from "./components/user/Profile";
 import API from "./api/API.mjs";
 
+/**
+ * Main component of the application that manages the routing and the state of the user.
+ */
 const App = () => {
   const navigate = useNavigate();
 
@@ -25,10 +28,17 @@ const App = () => {
 
   const [memes, setMemes] = useState([]);
 
+  /**
+   * Fetch the user info when the app is mounted.
+   */
   useEffect(() => {
     fetchUserInfo();
   }, []);
 
+  /**
+   * Handle the login of the user. If the login is successful, set the user and
+   * navigate to the home page.
+   */
   const handleLogin = async (email, password) => {
     try {
       const user = await API.login(email, password);
@@ -41,6 +51,10 @@ const App = () => {
     }
   };
 
+  /**
+   * Handle the logout of the user. If the logout is successful, set the user to
+   * null and navigate to the home page.
+   */
   const handleLogout = async () => {
     try {
       await API.logout();
@@ -53,6 +67,11 @@ const App = () => {
     }
   };
 
+  /**
+   * Fetch the user info from the API and set the user and the logged in state.
+   * If the user is not logged in, set the user to null and the logged in state to
+   * false.
+   */
   const fetchUserInfo = async () => {
     try {
       const user = await API.getUserInfo();

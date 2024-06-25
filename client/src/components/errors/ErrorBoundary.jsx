@@ -2,6 +2,10 @@ import { Component } from "react";
 import PropTypes from "prop-types";
 import React from "react";
 
+/**
+ * A component that catches errors in its children and displays a message.
+ * (also I tried implementing it with the class approach)
+ */
 class ErrorBoundary extends Component {
   constructor(props) {
     super(props);
