@@ -1,5 +1,4 @@
 import db from "../db/db.mjs";
-import { config } from "../../config.mjs";
 
 /**
  * Data access object for captions.
@@ -58,8 +57,8 @@ class CaptionDAO {
 
     return db.prepare(sql).all({
       idMeme: idMeme,
-      numCorrectCaptions: config.numCorrectCaptions,
-      numIncorrectCaptions: config.numIncorrectCaptions,
+      numCorrectCaptions: process.env.NUM_CORRECT_CAPTIONS,
+      numIncorrectCaptions: process.env.NUM_INCORRECT_CAPTIONS,
     });
   }
 

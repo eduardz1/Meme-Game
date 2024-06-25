@@ -6,7 +6,7 @@ export default [
   eslint.configs.recommended,
   {
     languageOptions: {
-      globals: globals.browser,
+      globals: globals.node,
       parserOptions: { ecmaVersion: "latest", sourceType: "module" },
     },
   },
