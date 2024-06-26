@@ -26,13 +26,19 @@ class CaptionDAO {
                 @numCorrectCaptions
         ), IncorrectCaptions AS (
             SELECT
-                Caption.id,
+                id,
                 caption
             FROM
                 Caption
-                LEFT JOIN CorrectCaption ON CorrectCaption.idCaption = Caption.id
             WHERE
-                idMeme <> @idMeme
+                id NOT IN (
+                    SELECT
+                        idCaption
+                    FROM
+                        CorrectCaption
+                    WHERE
+                        idMeme = @idMeme
+                )
             ORDER BY
                 RANDOM()
             LIMIT
@@ -46,7 +52,8 @@ class CaptionDAO {
                     *
                 FROM
                     CorrectCaptions
-                UNION ALL
+                UNION
+                ALL
                 SELECT
                     *
                 FROM

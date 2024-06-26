@@ -34,7 +34,7 @@ const CustomNavbar = ({ handleLogout, handleLogin, fetchUserInfo }) => {
             </Navbar.Brand>
           </Link>
           {isLoggedIn ? (
-            <>
+            <div className="mt-3">
               <ButtonToolbar>
                 <ButtonGroup className="me-2" aria-label="User profile">
                   <Link to="/profile">
@@ -47,9 +47,11 @@ const CustomNavbar = ({ handleLogout, handleLogin, fetchUserInfo }) => {
                   <LogoutButton handleLogout={handleLogout} />
                 </ButtonGroup>
               </ButtonToolbar>
-            </>
+            </div>
           ) : (
-            <LoginForm handleLogin={handleLogin} />
+            <div className="mt-3">
+              <LoginForm handleLogin={handleLogin} />
+            </div>
           )}
         </Container>
       </Navbar>

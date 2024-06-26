@@ -3,24 +3,30 @@
 ## Student: s332100 OCCHIPINTI EDUARD ANTONOVIC
 
 - [Exam #1: "Meme Game"](#exam-1-meme-game)
-	- [Student: s332100 OCCHIPINTI EDUARD ANTONOVIC](#student-s332100-occhipinti-eduard-antonovic)
-	- [React Client Application Routes](#react-client-application-routes)
-	- [Main React Components](#main-react-components)
-	- [API Server](#api-server)
-	- [Database Tables](#database-tables)
-		- [Short overview](#short-overview)
-		- [Tables (7)](#tables-7)
-			- [CorrectCaption](#correctcaption)
-			- [Caption](#caption)
-			- [Round](#round)
-			- [Meme](#meme)
-			- [Game](#game)
-			- [User](#user)
-		- [Triggers (2)](#triggers-2)
-			- [Round.AfterInsert](#roundafterinsert)
-			- [Game.BeforeDelete](#gamebeforedelete)
-	- [Screenshots](#screenshots)
-	- [Users Credentials](#users-credentials)
+  - [Student: s332100 OCCHIPINTI EDUARD ANTONOVIC](#student-s332100-occhipinti-eduard-antonovic)
+  - [React Client Application Routes](#react-client-application-routes)
+  - [Main React Components](#main-react-components)
+  - [API Server](#api-server)
+  - [Database Tables](#database-tables)
+    - [Short overview](#short-overview)
+    - [Tables (7)](#tables-7)
+      - [CorrectCaption](#correctcaption)
+      - [Caption](#caption)
+      - [Round](#round)
+      - [Meme](#meme)
+      - [Game](#game)
+      - [User](#user)
+    - [Triggers (2)](#triggers-2)
+      - [Round.AfterInsert](#roundafterinsert)
+      - [Game.BeforeDelete](#gamebeforedelete)
+  - [Screenshots](#screenshots)
+    - [Home page](#home-page)
+    - [Correct guess](#correct-guess)
+    - [Wrong guess](#wrong-guess)
+    - [End game screen](#end-game-screen)
+    - [Profile page](#profile-page)
+    - [Past games recap](#past-games-recap)
+  - [Users Credentials](#users-credentials)
 
 ## React Client Application Routes
 
@@ -218,12 +224,30 @@ END;
 
 ## Screenshots
 
+> The site has been designed to be friendly to screen color inverters (i.e. extensions like Dark Reader) so the screenshots show how the website looks both in light mode and dark mode through the extension.
+
+### Home page
+
 ![home page](imgs/home-page.png)
-![play screen](imgs/play-screen.png)
+
+### Correct guess
+
 ![correct guess](imgs/correct-guess.gif)
+
+### Wrong guess
+
 ![wrong guess](imgs/wrong-guess.gif)
+
+### End game screen
+
 ![end game screen](imgs/end-game-screen.png)
+
+### Profile page
+
 ![profile page with history](imgs/profile-page-history.png)
+
+### Past games recap
+
 ![past games recap](imgs/past-games-recap.gif)
 
 ## Users Credentials
