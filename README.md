@@ -3,30 +3,30 @@
 ## Student: s332100 OCCHIPINTI EDUARD ANTONOVIC
 
 - [Exam #1: "Meme Game"](#exam-1-meme-game)
-  - [Student: s332100 OCCHIPINTI EDUARD ANTONOVIC](#student-s332100-occhipinti-eduard-antonovic)
-  - [React Client Application Routes](#react-client-application-routes)
-  - [Main React Components](#main-react-components)
-  - [API Server](#api-server)
-  - [Database Tables](#database-tables)
-    - [Short overview](#short-overview)
-    - [Tables (7)](#tables-7)
-      - [CorrectCaption](#correctcaption)
-      - [Caption](#caption)
-      - [Round](#round)
-      - [Meme](#meme)
-      - [Game](#game)
-      - [User](#user)
-    - [Triggers (2)](#triggers-2)
-      - [Round.AfterInsert](#roundafterinsert)
-      - [Game.BeforeDelete](#gamebeforedelete)
-  - [Screenshots](#screenshots)
-    - [Home page](#home-page)
-    - [Correct guess](#correct-guess)
-    - [Wrong guess](#wrong-guess)
-    - [End game screen](#end-game-screen)
-    - [Profile page](#profile-page)
-    - [Past games recap](#past-games-recap)
-  - [Users Credentials](#users-credentials)
+	- [Student: s332100 OCCHIPINTI EDUARD ANTONOVIC](#student-s332100-occhipinti-eduard-antonovic)
+	- [React Client Application Routes](#react-client-application-routes)
+	- [Main React Components](#main-react-components)
+	- [API Server](#api-server)
+	- [Database Tables](#database-tables)
+		- [Short overview](#short-overview)
+		- [Tables (7)](#tables-7)
+			- [CorrectCaption](#correctcaption)
+			- [Caption](#caption)
+			- [Round](#round)
+			- [Meme](#meme)
+			- [Game](#game)
+			- [User](#user)
+		- [Triggers (2)](#triggers-2)
+			- [Round.AfterInsert](#roundafterinsert)
+			- [Game.BeforeDelete](#gamebeforedelete)
+	- [Screenshots](#screenshots)
+		- [Home page](#home-page)
+		- [Correct guess](#correct-guess)
+		- [Wrong guess](#wrong-guess)
+		- [End game screen](#end-game-screen)
+		- [Profile page](#profile-page)
+		- [Past games recap](#past-games-recap)
+	- [Users Credentials](#users-credentials)
 
 ## React Client Application Routes
 
@@ -50,13 +50,13 @@
 - POST `/api/sessions`: login
   - request body content: `{ email: string, password: string }`
   - response body content: `{ id: number, name: string, surname: string, email: string, totalScore: number }`
-  - response status code: 200
-  - possible errors: 401 (Unauthorized), 422 (Unprocessable Entity)
+  - response status code: 201
+  - possible errors: 401 (Unauthorized), 422 (Unprocessable Entity), 500 (Internal Server Error)
 - DELETE `/api/sessions/current`: logout
-  - response status code: 200
+  - response status code: 204
 - GET `/api/sessions/current`: get current user
   - response body content: `{ id: number, name: string, surname: string, email: string, totalScore: number }`
-  - response status code: 204
+  - response status code: 200
   - possible errors: 401 (Unauthorized), 500 (Internal Server Error)
 - GET `/api/games?limit=&offset=`: get the list of games
   - request query parameters: `limit` (number of games to retrieve), `offset` (number of games to skip)

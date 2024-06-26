@@ -30,7 +30,7 @@ class AuthRoutes {
      * @route POST /api/sessions
      * @body {string} email - User email
      * @body {string} password - User password
-     * @returns {Object} 200 - User object
+     * @returns {Object} 201 - User object
      */
     this.router.post(
       "/",

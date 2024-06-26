@@ -65,10 +65,10 @@ class Authenticator {
 
       if (!user) return res.status(401).json(info);
 
-      req.logIn(user, (err) => {
+      req.login(user, (err) => {
         if (err) return next(err);
 
-        return res.json(user);
+        return res.status(201).json(req.user);
       });
     })(req, res, next);
   }

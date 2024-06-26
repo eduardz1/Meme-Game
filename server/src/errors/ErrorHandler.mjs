@@ -27,7 +27,7 @@ class ErrorHandler {
   static register(app) {
     // eslint-disable-next-line no-unused-vars
     app.use((err, _req, res, _next) =>
-      res.status(err.customCode || 503).json({
+      res.status(err.customCode || 500).json({
         error: err.customMessage || "Internal Server Error",
       }),
     );
