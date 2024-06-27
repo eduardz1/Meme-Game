@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { useContext, useEffect, useState } from "react";
+import Accordion from "react-bootstrap/Accordion";
 import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
 import Modal from "react-bootstrap/Modal";
@@ -85,16 +85,18 @@ const EndScreen = ({ endGame, rounds }) => {
               className="img-fluid w-100"
             />
             {!!getScore() && (
-              <Card className="mt-3">
-                <Card.Header className="text-center">
-                  <h3>Correctly guessed captions</h3>
-                </Card.Header>
-                <Card.Body>
-                  <MemeCards
-                    rounds={rounds.filter((round) => round.score !== 0)}
-                  />
-                </Card.Body>
-              </Card>
+              <Accordion className="mt-3" defaultActiveKey="0">
+                <Accordion.Item eventKey="0">
+                  <Accordion.Header className="text-center">
+                    <h3>Correctly guessed captions</h3>
+                  </Accordion.Header>
+                  <Accordion.Body>
+                    <MemeCards
+                      rounds={rounds.filter((round) => round.score !== 0)}
+                    />
+                  </Accordion.Body>
+                </Accordion.Item>
+              </Accordion>
             )}
           </Modal.Body>
           <Modal.Footer>
