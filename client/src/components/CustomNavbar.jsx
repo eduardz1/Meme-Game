@@ -1,17 +1,16 @@
-import Navbar from "react-bootstrap/Navbar";
+import "bootstrap-icons/font/bootstrap-icons.css";
+import PropTypes from "prop-types";
+import { useContext } from "react";
+import { Button } from "react-bootstrap";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+import ButtonToolbar from "react-bootstrap/ButtonToolbar";
 import Container from "react-bootstrap/Container";
+import Image from "react-bootstrap/Image";
+import Navbar from "react-bootstrap/Navbar";
+import { Link } from "react-router-dom";
 import LoginForm from "./auth/LoginForm";
 import LogoutButton from "./auth/LogoutButton";
-import "bootstrap-icons/font/bootstrap-icons.css";
-import { Button } from "react-bootstrap";
-import ButtonToolbar from "react-bootstrap/ButtonToolbar";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
-import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-import React from "react";
-import Image from "react-bootstrap/Image";
 import LoggedInContext from "./contexts/LoggedInContext";
-import { useContext } from "react";
 
 /**
  * Navbar component that displays the logo and the login/logout buttons.
@@ -25,6 +24,7 @@ const CustomNavbar = ({ handleLogout, handleLogin, fetchUserInfo }) => {
         <Container>
           <Link to="/" style={{ textDecoration: "none" }}>
             <Image
+              alt="Logo"
               height={50}
               src="favicon.ico"
               style={{ marginTop: "-20px", marginRight: "5px" }}
@@ -38,7 +38,11 @@ const CustomNavbar = ({ handleLogout, handleLogin, fetchUserInfo }) => {
               <ButtonToolbar>
                 <ButtonGroup className="me-2" aria-label="User profile">
                   <Link to="/profile">
-                    <Button variant="outline-primary" onClick={fetchUserInfo}>
+                    <Button
+                      aria-label="Profile"
+                      variant="outline-primary"
+                      onClick={fetchUserInfo}
+                    >
                       <i className="bi bi-person-fill"></i>
                     </Button>
                   </Link>

@@ -8,7 +8,7 @@
     "start": "nodemon index.mjs",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint . --fix --max-warnings=0",
-    "format": "prettier . --write"
+    "format": "prettier . --write --plugin=prettier-plugin-organize-imports"
   },
   "author": "",
   "license": "ISC",
@@ -26,12 +26,14 @@
     "globals": "^15.4.0",
     "morgan": "^1.10.0",
     "passport": "^0.7.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "typescript": "^5.5.2"
   },
   "devDependencies": {
     "eslint": "^8.57.0",
     "eslint-plugin-import": "^2.29.1",
     "nodemon": "^3.1.3",
-    "prettier": "3.3.1"
+    "prettier": "^3.3.1",
+    "prettier-plugin-organize-imports": "^3.2.4"
   }
 }

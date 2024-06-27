@@ -1,9 +1,8 @@
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import InputGroup from "react-bootstrap/InputGroup";
-import { useState } from "react";
 import PropTypes from "prop-types";
-import React from "react";
+import { useState } from "react";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
 
 /**
  * A form for logging in. handles only the data, not the API call.
@@ -21,22 +20,26 @@ const LoginForm = ({ handleLogin }) => {
     <Form className="ml-auto" onSubmit={handleSubmit}>
       <InputGroup>
         <Form.Control
+          id="email"
           type="email"
           value={email}
           placeholder="email"
           onChange={(e) => setEmail(e.target.value)}
           required
           className="mr-sm-2"
+          autoComplete="email"
         />
         <Form.Control
+          id="password"
           type="password"
           value={password}
           placeholder="password"
           onChange={(e) => setPassword(e.target.value)}
           required
           className="mr-sm-2"
+          autoComplete="current-password"
         />
-        <Button variant="outline-primary" type="submit">
+        <Button aria-label="Login" variant="outline-primary" type="submit">
           Login
         </Button>
       </InputGroup>

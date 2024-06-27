@@ -1,6 +1,6 @@
+import { Buffer } from "buffer";
 import crypto from "crypto";
 import db from "../db/db.mjs";
-import { Buffer } from "buffer";
 
 /**
  * Data access object for the User table.

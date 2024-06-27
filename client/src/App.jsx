@@ -1,18 +1,17 @@
 import { useEffect, useState } from "react";
-import React from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
+import API from "./api/API.mjs";
 import CustomNavbar from "./components/CustomNavbar";
-import MessageToast from "./components/contexts/message/MessageToast";
+import LoggedInContext from "./components/contexts/LoggedInContext.jsx";
 import MessageContext from "./components/contexts/message/MessageContext.jsx";
+import MessageToast from "./components/contexts/message/MessageToast";
 import useMessageContext from "./components/contexts/message/useMessageContext.mjs";
 import ErrorPage from "./components/errors/Error404Page";
 import ErrorBoundary from "./components/errors/ErrorBoundary";
 import ProtectedRoute from "./components/errors/ProtectedRoute";
-import LoggedInContext from "./components/contexts/LoggedInContext.jsx";
 import Game from "./components/game/Game";
 import PlayButton from "./components/game/PlayButton";
 import Profile from "./components/user/Profile";
-import API from "./api/API.mjs";
 
 /**
  * Main component of the application that manages the routing and the state of the user.

@@ -1,8 +1,7 @@
-import { Navigate } from "react-router-dom";
 import PropTypes from "prop-types";
-import LoggedInContext from "../contexts/LoggedInContext";
 import { useContext } from "react";
-import React from "react";
+import { Navigate } from "react-router-dom";
+import LoggedInContext from "../contexts/LoggedInContext";
 
 /**
  * Component used to protect routes that require the user to be logged in.

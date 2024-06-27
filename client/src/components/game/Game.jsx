@@ -1,12 +1,11 @@
 import PropTypes from "prop-types";
-import { useState, useEffect, useContext } from "react";
-import MessageContext from "../contexts/message/MessageContext";
-import Round from "./Round";
-import React from "react";
-import EndScreen from "./EndScreen";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import LoggedInContext from "../contexts/LoggedInContext";
 import API from "../../api/API.mjs";
+import LoggedInContext from "../contexts/LoggedInContext";
+import MessageContext from "../contexts/message/MessageContext";
+import EndScreen from "./EndScreen";
+import Round from "./Round";
 
 /**
  * Game component that renders either the round or the end screen and contacts

@@ -1,7 +1,7 @@
 import express from "express";
 import { param, query } from "express-validator";
-import ErrorHandler from "../errors/ErrorHandler.mjs";
 import CaptionDAO from "../dao/caption.mjs";
+import ErrorHandler from "../errors/ErrorHandler.mjs";
 
 /**
  * Class representing the caption routes

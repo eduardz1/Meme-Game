@@ -1,6 +1,5 @@
-import { Component } from "react";
 import PropTypes from "prop-types";
-import React from "react";
+import { Component } from "react";
 
 /**
  * A component that catches errors in its children and displays a message.

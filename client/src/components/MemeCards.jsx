@@ -1,9 +1,8 @@
+import PropTypes from "prop-types";
 import Card from "react-bootstrap/Card";
-import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
-import PropTypes from "prop-types";
-import React from "react";
+import Row from "react-bootstrap/Row";
 
 /**
  * Reusable card components used to display a meme with an overlaid caption

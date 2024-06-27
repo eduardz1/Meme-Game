@@ -1,7 +1,7 @@
 import express from "express";
-import ErrorHandler from "../errors/ErrorHandler.mjs";
-import GameDao from "../dao/game.mjs";
 import { body, query } from "express-validator";
+import GameDao from "../dao/game.mjs";
+import ErrorHandler from "../errors/ErrorHandler.mjs";
 
 /**
  * Class representing the game routes

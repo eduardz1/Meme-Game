@@ -1,5 +1,5 @@
-import passport from "passport";
 import session from "express-session";
+import passport from "passport";
 import LocalStrategy from "passport-local";
 import UserDao from "./dao/user.mjs";
 

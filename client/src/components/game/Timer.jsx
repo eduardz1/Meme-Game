@@ -1,8 +1,7 @@
-import { useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
-import React from "react";
-import styles from "./Animations.module.css";
+import { useEffect, useRef, useState } from "react";
 import Container from "react-bootstrap/Container";
+import styles from "./Animations.module.css";
 
 const STROKE_WIDTH = 12;
 const RADIUS = 30;

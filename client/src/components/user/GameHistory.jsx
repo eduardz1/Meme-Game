@@ -6,7 +6,6 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import API from "../../api/API.mjs";
-import React from "react";
 import MemeCards from "../MemeCards.jsx";
 import MessageContext from "../contexts/message/MessageContext.jsx";
 
@@ -70,7 +69,7 @@ const GameHistory = () => {
       </Accordion>
       <Container className="text-center mt-3">
         {hasMoreGames && (
-          <Button onClick={loadMoreGames}>
+          <Button aria-label="LoadMoreGames" onClick={loadMoreGames}>
             {loadedGames === 0 ? "Load Games" : "Load More"}
           </Button>
         )}

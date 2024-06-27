@@ -1,11 +1,11 @@
-import morgan from "morgan";
 import express from "express";
+import morgan from "morgan";
 import Authenticator from "./auth.mjs";
-import AuthRoutes from "./routers/auth.mjs";
-import MemeRoutes from "./routers/meme.mjs";
-import GameRoutes from "./routers/game.mjs";
-import CaptionRoutes from "./routers/caption.mjs";
 import ErrorHandler from "./errors/ErrorHandler.mjs";
+import AuthRoutes from "./routers/auth.mjs";
+import CaptionRoutes from "./routers/caption.mjs";
+import GameRoutes from "./routers/game.mjs";
+import MemeRoutes from "./routers/meme.mjs";
 
 const PREFIX = "/api";
 

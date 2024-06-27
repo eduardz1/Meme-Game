@@ -1,7 +1,7 @@
-import express from "express";
 import cors from "cors";
-import initRoutes from "./src/routes.mjs";
 import "dotenv/config";
+import express from "express";
+import initRoutes from "./src/routes.mjs";
 
 const app = new express();
 

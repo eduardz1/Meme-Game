@@ -1,16 +1,14 @@
 import PropTypes from "prop-types";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
 import Row from "react-bootstrap/Row";
-import { useState, useEffect } from "react";
-import MessageContext from "../contexts/message/MessageContext.jsx";
-import Timer from "./Timer";
-import React from "react";
 import API from "../../api/API.mjs";
+import MessageContext from "../contexts/message/MessageContext.jsx";
 import styles from "./Animations.module.css";
+import Timer from "./Timer";
 
 /**
  * Component that renders the round of the game, showing the meme and the
@@ -151,6 +149,7 @@ const Round = ({ endRound, meme }) => {
             <Row key={index} className="mb-3">
               <Col>
                 <Button
+                  aria-label={caption.id}
                   variant={getButtonVariant(index)}
                   size="lg"
                   className={`w-100 ${getButtonClassName(index)}`}

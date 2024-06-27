@@ -1,11 +1,10 @@
-import Button from "react-bootstrap/Button";
 import PropTypes from "prop-types";
 import { useContext, useState } from "react";
+import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
-import MessageContext from "../contexts/message/MessageContext";
 import API from "../../api/API.mjs";
 import LoggedInContext from "../contexts/LoggedInContext";
-import React from "react";
+import MessageContext from "../contexts/message/MessageContext";
 import styles from "./Animations.module.css";
 
 /**
@@ -83,6 +82,7 @@ const PlayButton = ({ setMemes }) => {
       }}
     >
       <Button
+        aria-label="Play"
         variant="light"
         onClick={startGame}
         onMouseDown={() => setIsActive(true)}
@@ -93,6 +93,36 @@ const PlayButton = ({ setMemes }) => {
       >
         PLAY
       </Button>
+      <svg
+        alt="Is this a play button?"
+        className={styles.slowFadeInAnimation}
+        viewBox="0 0 400 225"
+        style={{
+          position: "absolute",
+          left: "-95%",
+          pointerEvents: "none",
+          width: "500px",
+        }}
+      >
+        <image
+          href="./is-this-a-play-button.png"
+          x="0"
+          y="0"
+          height="200px"
+          width="500px"
+        />
+        <text
+          x="35%"
+          y="99%"
+          fontFamily="Impact"
+          fontSize="20"
+          fill="white"
+          stroke="black"
+          strokeWidth="1"
+        >
+          IS THIS A PLAY BUTTON?
+        </text>
+      </svg>
     </div>
   );
 };

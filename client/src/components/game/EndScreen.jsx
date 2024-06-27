@@ -1,12 +1,11 @@
 import PropTypes from "prop-types";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import Image from "react-bootstrap/Image";
 import { useEffect, useState } from "react";
-import Container from "react-bootstrap/Container";
+import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import Container from "react-bootstrap/Container";
+import Image from "react-bootstrap/Image";
+import Modal from "react-bootstrap/Modal";
 import MemeCards from "../MemeCards";
-import React from "react";
 
 /**
  * End screen of the game with the total score and a summary of the correctly
@@ -98,6 +97,7 @@ const EndScreen = ({ setConfirmed, rounds }) => {
           </Modal.Body>
           <Modal.Footer>
             <Button
+              aria-label="Continue"
               variant="primary"
               onClick={() => {
                 setShow(false);

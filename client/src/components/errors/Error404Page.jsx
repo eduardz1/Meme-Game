@@ -1,9 +1,8 @@
-import Image from "react-bootstrap/Image";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
+import { useEffect, useRef, useState } from "react";
 import Col from "react-bootstrap/Col";
-import { useState, useEffect, useRef } from "react";
-import React from "react";
+import Container from "react-bootstrap/Container";
+import Image from "react-bootstrap/Image";
+import Row from "react-bootstrap/Row";
 
 const PEDRO = "/racoon-pedro.gif";
 
@@ -35,7 +34,13 @@ const ErrorPage = () => {
           <div style={{ fontSize: `${imgSize}px` }}>4</div>
         </Col>
         <Col>
-          <Image ref={imgRef} src={PEDRO} roundedCircle fluid></Image>
+          <Image
+            ref={imgRef}
+            src={PEDRO}
+            roundedCircle
+            fluid
+            alt="Racoon"
+          ></Image>
         </Col>
         <Col className="text-center">
           <div style={{ fontSize: `${imgSize}px` }}>4</div>
