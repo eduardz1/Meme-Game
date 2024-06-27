@@ -63,7 +63,7 @@ const Round = ({ endRound, meme }) => {
 
         const isCorrectGuess = await API.validateCaption(
           meme.captions[i].id,
-          meme.id,
+          meme.id
         );
 
         meme.captions[i].isCorrect = isCorrectGuess;
@@ -86,7 +86,7 @@ const Round = ({ endRound, meme }) => {
       } else {
         isCorrectGuess = await API.validateCaption(
           meme.captions[index].id,
-          meme.id,
+          meme.id
         );
 
         setIsCorrect(isCorrectGuess);
@@ -114,7 +114,7 @@ const Round = ({ endRound, meme }) => {
   };
 
   return (
-    <Col lg={8} className="mx-auto">
+    <Col lg={6} className="mx-auto">
       <Container fluid="md">
         <Row className="mb-3">
           <Col
@@ -156,11 +156,12 @@ const Round = ({ endRound, meme }) => {
                   style={{
                     fontFamily: "Impact",
                     textTransform: "uppercase",
-                    fontSize: "2rem",
+                    fontSize: "1.8rem",
                     color: "white",
                     transition: "all 0.3s ease",
-                    textShadow:
-                      "-2px -2px 0px black, 2px -2px 0px black, -2px 2px 0px black, 2px 2px 0px black",
+                    textShadow: `
+                          2px 0 black, -2px 0 black, 0 2px black, 0 -2px black,
+                          1px 1px black, -1px -1px black, 1px -1px black, -1px 1px black`,
                   }}
                   onClick={() => handleClick(index)}
                   disabled={clickedButton !== null}
