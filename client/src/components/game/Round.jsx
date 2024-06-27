@@ -63,7 +63,7 @@ const Round = ({ endRound, meme }) => {
 
         const isCorrectGuess = await API.validateCaption(
           meme.captions[i].id,
-          meme.id
+          meme.id,
         );
 
         meme.captions[i].isCorrect = isCorrectGuess;
@@ -86,7 +86,7 @@ const Round = ({ endRound, meme }) => {
       } else {
         isCorrectGuess = await API.validateCaption(
           meme.captions[index].id,
-          meme.id
+          meme.id,
         );
 
         setIsCorrect(isCorrectGuess);

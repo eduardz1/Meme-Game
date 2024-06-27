@@ -40,7 +40,7 @@ const EndScreen = ({ endGame, rounds }) => {
   const getRandomImage = (folder) => {
     const imageNumber =
       Math.floor(
-        Math.random() * parseInt(import.meta.env.VITE_NUM_REACTION_IMAGES)
+        Math.random() * parseInt(import.meta.env.VITE_NUM_REACTION_IMAGES),
       ) + 1;
     return `reactions/${folder}/${imageNumber}.gif`;
   };
