@@ -253,6 +253,8 @@ END;
 
 ## Users Credentials
 
+> The first user has some games played while the second user has no games played.
+
 | **Email**                            | **Password** |
 | ------------------------------------ | ------------ |
 | eduard.occhipinti@studenti.polito.it | funghi       |
