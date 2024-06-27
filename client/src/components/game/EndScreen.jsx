@@ -1,19 +1,21 @@
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
 import Modal from "react-bootstrap/Modal";
+import LoggedInContext from "../contexts/LoggedInContext";
 import MemeCards from "../MemeCards";
 
 /**
  * End screen of the game with the total score and a summary of the correctly
  * selected memes
  */
-const EndScreen = ({ setConfirmed, rounds }) => {
+const EndScreen = ({ endGame, rounds }) => {
   const [show, setShow] = useState(true);
   const [reactionImage, setReactionImage] = useState("");
+  const isLoggedIn = useContext(LoggedInContext);
 
   useEffect(() => {
     setReactionImage(getReaction());
@@ -38,7 +40,7 @@ const EndScreen = ({ setConfirmed, rounds }) => {
   const getRandomImage = (folder) => {
     const imageNumber =
       Math.floor(
-        Math.random() * parseInt(import.meta.env.VITE_NUM_REACTION_IMAGES),
+        Math.random() * parseInt(import.meta.env.VITE_NUM_REACTION_IMAGES)
       ) + 1;
     return `reactions/${folder}/${imageNumber}.gif`;
   };
@@ -97,17 +99,16 @@ const EndScreen = ({ setConfirmed, rounds }) => {
           </Modal.Body>
           <Modal.Footer>
             <Button
-              aria-label="Continue"
+              aria-label={isLoggedIn ? "Save" : "Continue"}
               variant="primary"
               onClick={() => {
                 setShow(false);
 
-                setTimeout(() => {
-                  setConfirmed(true);
-                }, 300);
+                // Wait for the modal closing animation to finish
+                setTimeout(() => endGame(), 300);
               }}
             >
-              Continue
+              {isLoggedIn ? "Save" : "Continue"}
             </Button>
           </Modal.Footer>
         </Modal>
@@ -117,7 +118,7 @@ const EndScreen = ({ setConfirmed, rounds }) => {
 };
 
 EndScreen.propTypes = {
-  setConfirmed: PropTypes.func.isRequired,
+  endGame: PropTypes.func.isRequired,
   rounds: PropTypes.array.isRequired,
 };
 

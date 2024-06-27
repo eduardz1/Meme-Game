@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../../api/API.mjs";
 import LoggedInContext from "../contexts/LoggedInContext";
@@ -13,14 +13,10 @@ import Round from "./Round";
  */
 const Game = ({ memes, setMemes }) => {
   const navigate = useNavigate();
-
   const { setError } = useContext(MessageContext);
-
   const isLoggedIn = useContext(LoggedInContext);
-
   const [rounds, setRounds] = useState([]);
   const [currentRound, setCurrentRound] = useState(0);
-  const [isConfirmed, setConfirmed] = useState(false);
 
   /**
    * Ends game by recording the result through the API and navigating back to home
@@ -28,9 +24,15 @@ const Game = ({ memes, setMemes }) => {
    * @param {Array.<{number, number, number, string, string}>} rounds the rounds
    *  played by the user
    */
-  const endGame = async (rounds) => {
+  const endGame = async () => {
+    // Filter out unnecessary fields
+    const cleanedUpRounds = rounds.map((round) => {
+      const { idMeme, idCaption, score } = round;
+      return { idMeme, idCaption, score };
+    });
+
     try {
-      if (isLoggedIn) await API.recordGame(rounds);
+      if (isLoggedIn) await API.recordGame(cleanedUpRounds);
 
       navigate("/");
       setMemes([]);
@@ -46,16 +48,6 @@ const Game = ({ memes, setMemes }) => {
     setRounds([...rounds, { idMeme, idCaption, score, tag, caption }]);
     setCurrentRound(currentRound + 1);
   };
-
-  useEffect(() => {
-    // Filter out unnecessary fields
-    const cleanedUpRounds = rounds.map((round) => {
-      const { idMeme, idCaption, score } = round;
-      return { idMeme, idCaption, score };
-    });
-
-    if (isConfirmed) endGame(cleanedUpRounds);
-  }, [isConfirmed]);
 
   return (
     <>
@@ -76,7 +68,7 @@ const Game = ({ memes, setMemes }) => {
           />
         </div>
       ) : (
-        <EndScreen setConfirmed={setConfirmed} rounds={rounds} />
+        <EndScreen endGame={endGame} rounds={rounds} />
       )}
     </>
   );

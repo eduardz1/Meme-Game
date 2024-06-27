@@ -33,6 +33,7 @@
 - Route `/`: home page, also contains the play button to start the new game
 - Route `/play`: page where the game is played
 - Route `/profile`: page showing the history of the games played by the user
+- Route `/*`: sends to 404 page
 
 ## Main React Components
 
